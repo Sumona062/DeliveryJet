@@ -1,0 +1,335 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load widget_tweaks %}
+{% block content %}
+
+
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js">
+        </script>
+<style>
+body {
+    color: #000;
+    overflow-x: hidden;
+    height: 100%;
+    background-color: #B0BEC5;
+    background-repeat: no-repeat
+}
+.register{
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    margin-top: 3%;
+    padding: 3%;
+}
+.register-left{
+    text-align: center;
+    color: #fff;
+    margin-top: 4%;
+}
+.register-left input{
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    width: 60%;
+    background: #f8f9fa;
+    font-weight: bold;
+    color: #383d41;
+    margin-top: 30%;
+    margin-bottom: 3%;
+    cursor: pointer;
+}
+.register-right{
+    background: #f8f9fa;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+}
+.register-left img{
+    margin-top: 15%;
+    margin-bottom: 5%;
+    width: 25%;
+    -webkit-animation: mover 2s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+@-webkit-keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+.register-left p{
+    font-weight: lighter;
+    padding: 12%;
+    margin-top: -9%;
+}
+.register .register-form{
+    padding: 10%;
+    margin-top: 10%;
+}
+.btnRegister{
+    float: right;
+    margin-top: 10%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #0062cc;
+    color: #fff;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+
+.btnLogin{
+    float: center;
+    margin-top: 8%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 6%;
+    background: white;
+    color: blue;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+.register .nav-tabs{
+    margin-top: 3%;
+    border: none;
+    background: #0062cc;
+    border-radius: 1.5rem;
+    width: 50%;
+    float: right;
+}
+.register .nav-tabs .nav-link{
+    padding: 2%;
+    height: 34px;
+    font-weight: 600;
+    color: #fff;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+}
+.register .nav-tabs .nav-link:hover{
+    border: none;
+}
+.register .nav-tabs .nav-link.active{
+    width: 120px;
+    color: #0062cc;
+    border: 2px solid #0062cc;
+    border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+}
+.register-heading{
+    text-align: center;
+    margin-top: 8%;
+    margin-bottom: -15%;
+    color: #495057;
+}
+</style>
+</head>
+<body>
+    <div class="container register">
+                <div class="row">
+                    <div class="col-md-3 register-left">
+                        <img src="{% static 'assets/favicon.png' %}" alt="">
+                        <h6>Welcome to DeliveryJet</h6>
+
+                        <p>We provide the best service for you!</p>
+                        <a href="{% url 'login' %}" class="btnLogin">Log In</a>
+                        <br>
+                    </div>
+                    <div class="col-md-9 register-right">
+                        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="customer-tab" data-toggle="tab" href="#customer" role="tab" aria-controls="customer" aria-selected="true">Customer</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="company-tab" data-toggle="tab" href="#company" role="tab" aria-controls="company" aria-selected="false">Company</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="deliveryMan-tab" data-toggle="tab" href="#deliveryMan" role="tab" aria-controls="deliveryMan" aria-selected="false">Delivery Man</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            
+                            <div class="tab-pane fade show active" id="customer" role="tabpanel" aria-labelledby="customer-tab">
+                                <form action="" class="" method="POST">
+                                    {% csrf_token %}
+                                <h3 class="register-heading">Apply as a Customer</h3>
+                                
+                                
+                                
+                                    <div class="row register-form">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="text-black">Full Name</label>
+                                                {{ formBuyer.name|add_class:"form-control" }}
+                                                {{ formBuyer.name.errors }}
+                                                <p>{{ formBuyer.name.help_text|safe }}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="text-black">Password</label>
+                                                {{ formBuyer.password1|add_class:"form-control" }}
+                                                {{ formBuyer.password1.errors }}
+                                                <p class="help">{{ formBuyer.password1.help_text|safe }}</p>
+                                            </div>
+                                           
+
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="text-black">Email Address</label>
+                                                {{ formBuyer.email|add_class:"form-control" }}
+                                                {{ formBuyer.email.errors }}
+                                                <p>{{ formBuyer.email.help_text|safe }}</p>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="text-black">Re Type Password</label>
+                                                {{ formBuyer.password2|add_class:"form-control" }}
+                                                {{ formBuyer.password2.errors }}
+                                                <p class="help">{{ formBuyer.password2.help_text|safe }}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                {{formBuyer.is_buyer.as_hidden}}
+                                            </div>
+                                       
+                                            <input class="btnRegister" name="Create User" type="submit" value="Register">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <div class="tab-pane fade show" id="company" role="tabpanel" aria-labelledby="company-tab">
+                                <form action="" class="" method="POST">
+                                    {% csrf_token %}
+                                <h3 class="register-heading">Apply as a Customer</h3>
+                                
+                                
+                                
+                                    <div class="row register-form">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="text-black">Full Name</label>
+                                                {{ formCompany.name|add_class:"form-control" }}
+                                                {{ formCompany.name.errors }}
+                                                <p>{{ formCompany.name.help_text|safe }}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="text-black">Password</label>
+                                                {{ formCompany.password1|add_class:"form-control" }}
+                                                {{ formCompany.password1.errors }}
+                                                <p class="help">{{ formCompany.password1.help_text|safe }}</p>
+                                            </div>
+                                           
+
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="text-black">Email Address</label>
+                                                {{ formCompany.email|add_class:"form-control" }}
+                                                {{ formCompany.email.errors }}
+                                                <p>{{ formCompany.email.help_text|safe }}</p>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="text-black">Re Type Password</label>
+                                                {{ formCompany.password2|add_class:"form-control" }}
+                                                {{ formCompany.password2.errors }}
+                                                <p class="help">{{ formCompany.password2.help_text|safe }}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                {{formCompany.is_company.as_hidden}}
+                                            </div>
+                                       
+                                            <input class="btnRegister" name="Create User" type="submit" value="Register">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade show" id="deliveryMan" role="tabpanel" aria-labelledby="deliveryMan-tab">
+                                <form action="" class="" method="POST">
+                                    {% csrf_token %}
+                                <h3 class="register-heading">Apply as a Customer</h3>
+                                
+                                
+                                
+                                    <div class="row register-form">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="text-black">Full Name</label>
+                                                {{ formDeliveryMan.name|add_class:"form-control" }}
+                                                {{ formDeliveryMan.name.errors }}
+                                                <p>{{ formDeliveryMan.name.help_text|safe }}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="text-black">Password</label>
+                                                {{ formDeliveryMan.password1|add_class:"form-control" }}
+                                                {{ formDeliveryMan.password1.errors }}
+                                                <p class="help">{{ formDeliveryMan.password1.help_text|safe }}</p>
+                                            </div>
+                                           
+
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="text-black">Email Address</label>
+                                                {{ formDeliveryMan.email|add_class:"form-control" }}
+                                                {{ formDeliveryMan.email.errors }}
+                                                <p>{{ formDeliveryMan.email.help_text|safe }}</p>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="text-black">Re Type Password</label>
+                                                {{ formDeliveryMan.password2|add_class:"form-control" }}
+                                                {{ formDeliveryMan.password2.errors }}
+                                                <p class="help">{{ formDeliveryMan.password2.help_text|safe }}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                {{formDeliveryMan.is_DeliveryMan.as_hidden}}
+                                            </div>
+                                       
+                                            <input class="btnRegister" name="Create User" type="submit" value="Register">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>				                           
+             
+</body>
+</html>
+
+
+
+<script>
+    const form_fields = document.getElementsByTagName("input")
+
+    form_fields[1].placeholder = 'Full Name'
+    form_fields[2].placeholder = 'Password'
+    form_fields[3].placeholder = 'Email Address'
+    form_fields[4].placeholder = 'Confirm Password'
+    form_fields[8].placeholder = 'Full Name'
+    form_fields[9].placeholder = 'Password'
+    form_fields[10].placeholder = 'Email Address'
+    form_fields[11].placeholder = 'Confirm Password'
+    form_fields[15].placeholder = 'Full Name'
+    form_fields[16].placeholder = 'Password'
+    form_fields[17].placeholder = 'Email Address'
+    form_fields[18].placeholder = 'Confirm Password'
+</script>
+
+ {% endblock %}
+       
