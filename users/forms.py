@@ -73,3 +73,21 @@ class CompanyEditProfileForm(ModelForm):
         model = CompanyModel
         fields = '__all__'
         exclude = ['user']
+
+
+class BuyerEditProfileForm(ModelForm):
+    image = forms.ImageField(required=False, error_messages={'invalid': "Image files only"}, widget=forms.FileInput)
+
+    class Meta:
+        model = BuyerModel
+        fields = '__all__'
+        exclude = ['user']
+
+
+class PostProductForm(ModelForm):
+    image = forms.ImageField(required=False, error_messages={'invalid': "Image files only"}, widget=forms.FileInput)
+
+    class Meta:
+        model = ProductModel
+        fields = '__all__'
+        exclude = ['user']

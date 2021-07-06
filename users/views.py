@@ -81,7 +81,7 @@ def login_page(request):
                 login(request, user)
                 if request.GET.get('next'):
                     return redirect(request.GET.get('next'))
-                return redirect('buyer-feed')
+                return redirect('buyer-feed',user.id)
 
             if user and user.is_company :
                 login(request, user)
@@ -113,10 +113,14 @@ def logout_user(request):
 
 @login_required(login_url='login')
 @show_to_buyer(allowed_roles=['admin', 'is_buyer'])
-def buyer_feed(request):
+def buyer_feed(request, pk):
+    user = User.objects.get(id=pk)
     
-
-    return render(request, 'buyer/buyer-feed.html')
+    context = {
+        'user': user,
+        
+    }
+    return render(request, 'buyer/buyer-feed.html', context)
 
 @login_required(login_url='login')
 @show_to_deliveryMan(allowed_roles=['admin', 'is_DeliveryMan'])
@@ -151,6 +155,7 @@ def contact(request):
 
 
 @login_required(login_url='login')
+@show_to_company(allowed_roles=['admin', 'is_company'])
 def company_feed(request, pk):
     user = User.objects.get(id=pk)
 
@@ -193,3 +198,67 @@ def company_edit_profile(request):
         'form': form,
     }
     return render(request, 'company/company-edit-profile.html', context)
+
+
+    
+@login_required(login_url='login')
+@show_to_buyer(allowed_roles=['admin', 'is_buyer'])
+def buyer_edit_profile(request):
+    buyer = request.user.buyermodel
+    form = BuyerEditProfileForm(instance=buyer)
+    if request.method == 'POST':
+        form = BuyerEditProfileForm(request.POST, request.FILES, instance=buyer)
+        if form.is_valid():
+            form.save()
+            return redirect('buyer-feed', request.user.id)
+        else:
+            messages.error(request, 'There are a few problems')
+            return redirect('buyer-edit-profile')
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'buyer/buyer-edit-profile.html', context)
+
+
+    
+@login_required(login_url='login')
+@show_to_company(allowed_roles=['admin', 'is_company'])
+def post_product(request):
+    task = "Add"
+    form = PostProductForm()
+
+    if request.method == 'POST':
+        form = PostProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.user = request.user
+            form.save()
+        else:
+            return redirect('post-product')
+
+    context = {
+        'task': task,
+        'form': form
+    }
+    return render(request, 'product/post-product.html', context)
+
+
+@login_required(login_url='login')
+@show_to_company(allowed_roles=['admin', 'is_company'])
+def edit_product(request, pk):
+    task = "Edit"
+    product = ProductModel.objects.get(id=pk)
+    form = PostProductForm(instance=product)
+    if request.method == 'POST':
+        form = PostProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+        else:
+            return redirect('edit-product', request.ProductModel.id)
+
+    context = {
+        'task': task,
+        'form': form,
+    }
+    return render(request, 'product/post-product.html', context)

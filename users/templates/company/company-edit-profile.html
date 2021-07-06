@@ -213,6 +213,10 @@ div.relative {
                             <label>Location</label>
                             {{form.location|add_class:"form-control"}}
                         </div>
+                        <div class="form-group">
+                            <label>Company Type</label>
+                            {{form.type|add_class:"form-control"}}
+                        </div>
     
     
                         <div class="form-group">
@@ -245,7 +249,5 @@ div.relative {
 <script>
     const form_fields = document.getElementsByTagName("input")
 
-    form_fields[1].placeholder = 'Email Address'
-    form_fields[2].placeholder = 'Password'
 </script>
 {% endblock %}

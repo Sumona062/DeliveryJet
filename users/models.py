@@ -73,6 +73,7 @@ class BuyerModel(models.Model):
     ]
 
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    image = models.ImageField(null=True, blank=True)
     facebook = models.CharField(max_length=255, null=True, blank=True)
     gender = models.CharField(max_length=255, choices=GENDER_CHOICES, null=True, blank=True)
 
@@ -91,11 +92,24 @@ class DeliveryManModel(models.Model):
     facebook = models.CharField(max_length=255, null=True, blank=True)
 
 class CompanyModel(models.Model):
+    TYPE_CHOICES=[
+        ('Drug store','Drug store'),
+        ('Home Appliances Store' ,'Home Appliances Store'),
+        ('Electronic Store','Electronic Store'),
+        ('Food marts','Food marts'),
+        ('Fashion house','Fashion house'),
+        ('Sports hub','Sports hub'),
+        ('Lifestyle store','Lifestyle store'),
+        ('Mom and kids','Mom and kids'),
+        ('Cosmetics House','Cosmetics House'),
+        ('book store','book store')
+    ]
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     about = RichTextField(null=True, blank=True)
     location = models.CharField(max_length=100, null=True, blank=True)
-    logo = models.ImageField(upload_to='images/',null=True,blank=True)
+    logo = models.ImageField(null=True,blank=True)
     website = models.CharField(max_length=255, null=True, blank=True)
+    type=models.CharField(max_length=255, choices=TYPE_CHOICES, null=True, blank=True)
     phone = models.CharField(max_length=255, null=True, blank=True)
 
  
@@ -137,3 +151,11 @@ class AvailabilityModel(models.Model):
 class PreferredAreaModel(models.Model):
     user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
     area=models.CharField(max_length=255, null=True, blank=True)
+
+class ProductModel(models.Model):
+    user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
+    name=models.CharField(max_length=255, null=True, blank=True)
+    price=models.CharField(max_length=255, null=True, blank=True)
+    category=models.CharField(max_length=255, null=True, blank=True)
+    image=models.ImageField(null=True,blank=True)
+    refill=models.CharField(max_length=255, null=True, blank=True)

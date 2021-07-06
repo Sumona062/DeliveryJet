@@ -49,9 +49,9 @@
           <li><a href="#about">About</a></li>
           <li><a href="#products">Products</a></li>
           {% if request.user == user and request.user.is_company %}
-          <li ><a href="">Post Products</a></li>
+          <li ><a href="{% url 'post-product' %}">Post Products</a></li>
           <li ><a href= "{% url 'company-edit-profile' %}">Edit Details</a></li>
-          <li ><a href= "">Acocount Settings</a></li>
+          <li ><a href= "">Account Settings</a></li>
           {% endif %}
           <li  > <a class="get-started-btn scrollto" href="{% url 'logout' %}">Log Out </a></li>
         </ul>
@@ -73,10 +73,7 @@
           {% endif %}
           <h1>{{user.name}}</h1>
           <h2>Welcome to our zone</h2>
-          <div class="d-lg-flex">
-            <a href="#about" class="btn-get-started scrollto">Get Started</a>
-            <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox btn-watch-video" data-vbtype="video" data-autoplay="true"> Watch Video <i class="icofont-play-alt-2"></i></a>
-          </div>
+          
         </div>
         <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
          
@@ -225,7 +222,7 @@
 
                 <i class="icofont-google-map"></i>
                 <h4>Location:</h4>
-                {% if user.companymodel.phone %}
+                {% if user.companymodel.location %}
                 <p>{{user.companymodel.location}}</p>
                 {% else %}
                 {% if request.user == user %}
