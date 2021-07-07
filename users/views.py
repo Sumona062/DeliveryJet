@@ -4,6 +4,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from users.forms import LoginForm
 from users.models import User
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import login, logout, update_session_auth_hash
 from django.db.models import Q
 from django.shortcuts import render
@@ -171,10 +172,25 @@ def company_feed(request, pk):
         location_link += "&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
 
     
+    
+    product_list = ProductModel.objects.filter(user=user)
+    product_category=uniqueCategory(product_list)
+
+
+    paginator = Paginator(product_list, 5)
+    page = request.GET.get('page', 1)
+    try:
+        product_list = paginator.page(page)
+    except PageNotAnInteger:
+        product_list = paginator.page(1)
+    except EmptyPage:
+        product_list = paginator.page(paginator.num_pages)
+
     context = {
         'user': user,
         'location_link': location_link,
-        
+        'product_list': product_list,
+        'product_category':product_category,
     }
     return render(request, 'company/company-feed.html', context)
 
@@ -234,6 +250,7 @@ def post_product(request):
             product = form.save(commit=False)
             product.user = request.user
             form.save()
+            return redirect('company-feed', request.user.id)
         else:
             return redirect('post-product')
 
@@ -254,6 +271,7 @@ def edit_product(request, pk):
         form = PostProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
+            return redirect('company-feed', request.user.id)
         else:
             return redirect('edit-product', request.ProductModel.id)
 

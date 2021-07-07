@@ -26,5 +26,4 @@ urlpatterns = [
      path('post-product/', post_product, name='post-product'),
     path('edit-product/<str:pk>/', edit_product, name='edit-product'),
 
-]+static(settings.MEDIA_URL,
-                              document_root=settings.MEDIA_ROOT)
+]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
