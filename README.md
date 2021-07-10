@@ -5,10 +5,12 @@
 ```
 https://github.com/Sumona062/DeliveryJet.git
 ```
-# create environment 
+# create virtual environment 
 ```
--Set-ExecutionPolicy Unrestricted -Scope Process
 -python -m venv ENV
+```
+# start virtual environment 
+```
 -.\ENV\Scripts\activate
 ```
 
@@ -26,4 +28,6 @@ https://github.com/Sumona062/DeliveryJet.git
 -python -m pip install django-widget-tweaks
 ```
 # run the server
+```
 -python .\manage.py runserver
+```
