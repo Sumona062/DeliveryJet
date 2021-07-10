@@ -82,34 +82,43 @@ class DeliveryManModel(models.Model):
         ('Male', 'Male'),
         ('Female', 'Female'),
     ]
+    TYPE_CHOICES=[
+        ('Driving License','Driving License'),
+        ('NID','NID'),
+        ('Passport','Passport')
+    ]
+
 
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
-    bio =  models.CharField(max_length=255, choices=GENDER_CHOICES, null=True, blank=True)
-    address = models.TextField(max_length=255, null=True, blank=True)
+    bio =  models.CharField(max_length=255, null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
     phone = models.CharField(max_length=255, null=True, blank=True)
     gender = models.CharField(max_length=255, choices=GENDER_CHOICES, null=True, blank=True)
     facebook = models.CharField(max_length=255, null=True, blank=True)
+    documentID=models.CharField(max_length=255,  null=False, blank=False,default="")
+    documentType=models.CharField(max_length=255, choices=TYPE_CHOICES, null=False, blank=False,default="")
 
 class CompanyModel(models.Model):
     TYPE_CHOICES=[
-        ('Drug store','Drug store'),
-        ('Home Appliances Store' ,'Home Appliances Store'),
-        ('Electronic Store','Electronic Store'),
-        ('Food marts','Food marts'),
-        ('Fashion house','Fashion house'),
-        ('Sports hub','Sports hub'),
-        ('Lifestyle store','Lifestyle store'),
-        ('Mom and kids','Mom and kids'),
+        ('Book Store','Book Store'),
         ('Cosmetics House','Cosmetics House'),
-        ('book store','book store')
+        ('Drug Store','Drug Store'),
+        ('Electronic Store','Electronic Store'),
+        ('Food Marts','Food Marts'),
+        ('Fashion House','Fashion House'),
+        ('Home Appliances Store' ,'Home Appliances Store'),
+        ('Lifestyle Store','Lifestyle Store'),
+        ('Mom and Kids','Mom and Kids'),
+        ('Sports Hub','Sports Hub') 
+       
     ]
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     about = RichTextField(null=True, blank=True)
     location = models.CharField(max_length=100, null=True, blank=True)
     logo = models.ImageField(null=True,blank=True)
     website = models.CharField(max_length=255, null=True, blank=True)
-    type=models.CharField(max_length=255, choices=TYPE_CHOICES, null=True, blank=True)
+    type=models.CharField(max_length=255, choices=TYPE_CHOICES, null=False, blank=False, default="")
     phone = models.CharField(max_length=255, null=True, blank=True)
 
  

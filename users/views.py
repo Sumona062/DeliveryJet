@@ -16,9 +16,7 @@ from .forms import *
 from .utils import *
 
 def home(request):
-    buyers = User.objects.filter(is_buyer=True)
-    companies = User.objects.filter(is_company=True)
-    deliveryMan = User.objects.filter(is_DeliveryMan=True)
+   
 
     if request.method == 'POST':
         formBuyer = BuyerRegistrationForm(request.POST)
@@ -47,7 +45,7 @@ def home(request):
             email = formDeliveryMan.cleaned_data.get('email')
             raw_password = formDeliveryMan.cleaned_data.get('password1')
             user = authenticate(email=email, password=raw_password)
-            BuyerModel.objects.create(user=user)
+            DeliveryManModel.objects.create(user=user)
             return redirect('login')
         else:
             return render(request, 'signup.html', {'formBuyer': formBuyer,"formCompany":formCompany,"formDeliveryMan":formDeliveryMan})
@@ -57,9 +55,6 @@ def home(request):
     formCompany = CompanyRegistrationForm()
     formDeliveryMan = DeliveryManRegistrationForm()
     context = {
-        'buyers': buyers,
-        'companies': companies,
-        'deliveryMan': deliveryMan,
         "formBuyer": formBuyer,
         "formCompany":formCompany,
         "formDeliveryMan":formDeliveryMan
@@ -94,7 +89,7 @@ def login_page(request):
                 login(request, user)
                 if request.GET.get('next'):
                     return redirect(request.GET.get('next'))
-                return redirect('bdeliveryMan-feed')
+                return redirect('deliveryMan-feed',user.id)
 
         else:
             print("bye")
@@ -116,19 +111,30 @@ def logout_user(request):
 @show_to_buyer(allowed_roles=['admin', 'is_buyer'])
 def buyer_feed(request, pk):
     user = User.objects.get(id=pk)
+    companies = User.objects.filter(is_company=True)
+    type=uniqueCompanyType(companies)
     
     context = {
         'user': user,
+        'companies':companies,
+        'type':type,
+
         
     }
     return render(request, 'buyer/buyer-feed.html', context)
 
 @login_required(login_url='login')
 @show_to_deliveryMan(allowed_roles=['admin', 'is_DeliveryMan'])
-def deliveryMan_feed(request):
+def deliveryMan_feed(request,pk):
+    user = User.objects.get(id=pk)
     
+    context = {
+        'user': user,
+    }
 
     return render(request, 'deliveryMan/deliveryMan-feed.html')
+
+
 def about(request):
     return render(request, 'about.html')
 
@@ -156,7 +162,6 @@ def contact(request):
 
 
 @login_required(login_url='login')
-@show_to_company(allowed_roles=['admin', 'is_company'])
 def company_feed(request, pk):
     user = User.objects.get(id=pk)
 
@@ -214,6 +219,26 @@ def company_edit_profile(request):
         'form': form,
     }
     return render(request, 'company/company-edit-profile.html', context)
+
+    
+@login_required(login_url='login')
+@show_to_deliveryMan(allowed_roles=['admin', 'is_DeliveryMan'])
+def deliveryMan_edit_profile(request):
+    deliveryMan = request.user.deliverymanmodel
+    form = DeliveryManEditProfileForm(instance=deliveryMan)
+    if request.method == 'POST':
+        form = DeliveryManEditProfileForm(request.POST, request.FILES, instance=deliveryMan)
+        if form.is_valid():
+            form.save()
+            return redirect('deliveryMan-feed', request.user.id)
+        else:
+            messages.error(request, 'There are a few problems')
+            return redirect('deliveryMan-edit-profile')
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'deliveryMan/deliveryMan-edit-profile.html', context)
 
 
     
@@ -280,3 +305,47 @@ def edit_product(request, pk):
         'form': form,
     }
     return render(request, 'product/post-product.html', context)
+
+
+
+
+
+@login_required(login_url='login')
+def account_settings(request, pk):
+    user = User.objects.get(id=pk)
+    information_form = AccountInformationForm(instance=user)
+    password_form = PasswordChangeForm(request.user)
+    if request.method == 'POST':
+        information_form = AccountInformationForm(request.POST, instance=user)
+        password_form = PasswordChangeForm(request.user, request.POST)
+
+        if information_form.is_valid():
+            information_form.save()
+            if request.user.is_buyer:
+                return redirect('buyer-feed',request.user.id)
+            elif request.user.is_DeliveryMan:
+                return redirect('deliveryMan-feed', request.user.id)
+            else:
+                return redirect('company-feed', request.user.id)
+
+        elif password_form.is_valid():
+            user = password_form.save()
+            update_session_auth_hash(request, user)  # Important!
+            if request.user.is_buyer:
+                return redirect('buyer-feed',request.user.id)
+            elif request.user.is_DeliveryMan:
+                return redirect('deliveryMan-feed', request.user.id)
+            else:
+                return redirect('company-feed', request.user.id)
+        else:
+            context = {
+                'information_form': information_form,
+                'password_form': password_form,
+            }
+            return render(request, 'account-settings.html', context)
+
+    context = {
+        'information_form': information_form,
+        'password_form': password_form,
+    }
+    return render(request, 'account-settings.html', context)

@@ -11,8 +11,6 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Arsha Bootstrap Template - Index</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -50,7 +48,7 @@
           {% if request.user == user and request.user.is_company %}
           <li ><a href="{% url 'post-product' %}">Add Products</a></li>
           <li ><a href= "{% url 'company-edit-profile' %}">Edit Details</a></li>
-          <li ><a href= "">Account Settings</a></li>
+          <li ><a href= "{% url 'account_settings' user.id}">Account Settings</a></li>
           {% endif %}
           <li  > <a class="get-started-btn scrollto" href="{% url 'logout' %}">Log Out </a></li>
         </ul>
@@ -92,7 +90,7 @@
 
         <div class="section-title">
           <h2>Products</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+         
         </div>
         <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
 
@@ -121,8 +119,14 @@
                    {% if product.refill %}
                    <p>Coming stock in:{{product.refill}}</p>
                    {% endif %}
+                   {% if request.user == user and request.user.is_company %}
                    <a href="{% url 'edit-product' product.id %}"  class="venobox preview-link" title="Edit Product"><i class="bx bx-plus"></i></a>
-                   <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+                   {% else %}
+                   <a href=""  class="venobox preview-link" title="Add to cart"><i class="bx bx-plus"></i></a>
+                   {% endif %}
+                   {% if request.user == user and request.user.is_company %}
+                   <a href="" class="details-link" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                   {% endif %}
                  </div>
                </div>
                {% endif %}

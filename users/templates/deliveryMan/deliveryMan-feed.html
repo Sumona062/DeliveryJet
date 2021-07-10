@@ -1,3 +1,137 @@
-<h1>hello delivery Man</h1>
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
 
-<a href="{% url 'logout' %}" >Log Out</a>
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/company/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/company/vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/company/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/company/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/company/vendor/venobox/venobox.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/company/vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/company/vendor/aos/aos.css" rel="stylesheet' %}">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/company/css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center">
+        <div><img src="{% static 'assets/favicon.png' %}" width="30" height= "30"></div>
+        
+
+      <h1 class="logo mr-auto"><a href="{% url 'home' %}">DeliveryJet</a></h1>
+
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li><a href="#products">Orders</a></li>
+          {% if request.user == user and request.user.is_DeliveryMan %}
+          <li ><a href= "{% url 'deliveryMan-edit-profile' %}">Edit Details</a></li>
+          <li ><a href= "{% url 'account-settings' request.user.id %}">Account Settings</a></li>
+          {% endif %}
+          <li  > <a class="get-started-btn scrollto" href="{% url 'logout' %}">Log Out </a></li>
+        </ul>
+      </nav><!-- .nav-menu -->
+
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        
+        <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+         
+        <p style="color:white ;font-size:25px;">HELLO!!!</p>
+          <h1>{{user.name}}</h1>
+
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+            {% if user.deliverymanmodel.image %}
+          <img src="{{user.deliverymanmodel.image.url}}" style="width:600px;height:350px;" class="img-fluid animated" alt="">
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+   
+    <!-- ======= Portfolio Section ======= -->
+    <section id="products" class="portfolio">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Start Running!!</h2>
+        </div>
+
+        <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+          <li data-filter="*" class="filter-active">All</li>
+          
+         
+          
+         
+        </ul>
+
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+
+
+
+        </div>
+
+
+      </div>
+    </section><!-- End Portfolio Section -->
+
+
+  </main><!-- End #main -->
+
+ 
+
+  <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/company/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'assets/company/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/company/vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+  <script src="{% static 'assets//company/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'assets/company/vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'assets/company/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/company/vendor/venobox/venobox.min.js' %}"></script>
+  <script src="{% static 'assets/company/vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'assets/company/vendor/aos/aos.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/company/js/main.js' %}"></script>
+
+</body>
+
+</html>
+
+{% endblock %}

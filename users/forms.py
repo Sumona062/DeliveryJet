@@ -84,6 +84,15 @@ class BuyerEditProfileForm(ModelForm):
         exclude = ['user']
 
 
+class DeliveryManEditProfileForm(ModelForm):
+    image = forms.ImageField(required=False, error_messages={'invalid': "Image files only"}, widget=forms.FileInput)
+
+    class Meta:
+        model = DeliveryManModel
+        fields = '__all__'
+        exclude = ['user']
+
+
 class PostProductForm(ModelForm):
     image = forms.ImageField(required=False, error_messages={'invalid': "Image files only"}, widget=forms.FileInput)
 
@@ -91,3 +100,11 @@ class PostProductForm(ModelForm):
         model = ProductModel
         fields = '__all__'
         exclude = ['user']
+
+
+
+
+class AccountInformationForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ('name', 'email')

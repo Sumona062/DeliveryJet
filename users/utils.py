@@ -6,3 +6,15 @@ def uniqueCategory(product_list):
 
 
     return cat
+
+
+def uniqueCompanyType(companies):
+    cat=[]
+    for com in companies:
+        if com.companymodel.type not in cat:
+            cat.append(com.companymodel.type)
+
+
+    return cat
+
+
