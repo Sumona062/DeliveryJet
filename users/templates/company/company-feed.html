@@ -43,6 +43,9 @@
 
      <nav class="nav-menu d-none d-lg-block">
                 <ul>
+                  {% if request.user != user and request.user.is_buyer %}
+                  <li><a href="{% url 'buyer-feed' request.user.id %}">Go Back to Home</a></li>
+                  {% endif %}
                     <li><a href="#about">About</a></li>
                     <li><a href="#products">Products</a></li>
                     {% if request.user == user and request.user.is_company %}
