@@ -200,6 +200,39 @@ def company_feed(request, pk):
     return render(request, 'company/company-feed.html', context)
 
 
+@login_required(login_url='login')
+def company_feed_category(request, pk, cat):
+    user = User.objects.get(id=pk)
+
+    location_link = None
+
+    if user.companymodel.location:
+        locations = user.companymodel.location.split(' ')
+        location_link = "https://maps.google.com/maps?width=100%25&amp;height=450&amp;hl=en&amp;q="
+
+        for location in locations:
+            location_link += location + "%20"
+
+        location_link += "&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+
+    product_list = ProductModel.objects.filter(user=user)
+    
+    paginator = Paginator(product_list, 5)
+    page = request.GET.get('page', 1)
+    try:
+        product_list = paginator.page(page)
+    except PageNotAnInteger:
+        product_list = paginator.page(1)
+    except EmptyPage:
+        product_list = paginator.page(paginator.num_pages)
+
+    context = {
+        'user': user,
+        'location_link': location_link,
+        'product_list': product_list,
+        'product_category':cat,
+    }
+    return render(request, 'company/company-feed-category.html', context)
 
 @login_required(login_url='login')
 @show_to_company(allowed_roles=['admin', 'is_company'])

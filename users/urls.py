@@ -18,6 +18,7 @@ urlpatterns = [
      # customer and company registration url
     path('account/buyer-feed/<str:pk>/', buyer_feed, name='buyer-feed'),
     path('account/company-feed/<str:pk>/', company_feed, name='company-feed'),
+     path('account/company-feed-category/<str:pk>/<str:cat>/', company_feed_category, name='company-feed-category'),
     path('account/deliveryMan-feed/<str:pk>/', deliveryMan_feed, name='deliveryMan-feed'),
 
     path('company/company-edit-profile', company_edit_profile, name='company-edit-profile'),

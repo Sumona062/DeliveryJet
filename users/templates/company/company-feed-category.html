@@ -1,0 +1,243 @@
+﻿{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Arsha Bootstrap Template - Index</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/company/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/company/vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/company/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/company/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/company/vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/company/vendor/aos/aos.css" rel="stylesheet' %}">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/company/css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top ">
+        <div class="container d-flex align-items-center">
+            <div><img src="{% static 'assets/favicon.png' %}" width="30" height="30"></div>
+
+
+            <h1 class="logo mr-auto"><a href="{% url 'home' %}">DeliveryJet</a></h1>
+
+
+            <nav class="nav-menu d-none d-lg-block">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#products">Products</a></li>
+                    {% if request.user == user and request.user.is_company %}
+                    <li><a href="{% url 'post-product' %}">Add Products</a></li>
+                    <li><a href="{% url 'company-edit-profile' %}">Edit Details</a></li>
+                    <li><a href="">Account Settings</a></li>
+                    {% endif %}
+                    <li> <a class="get-started-btn scrollto" href="{% url 'logout' %}">Log Out </a></li>
+                </ul>
+            </nav><!-- .nav-menu -->
+
+
+        </div>
+    </header><!-- End Header -->
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex align-items-center">
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+                    {% if user.companymodel.logo %}
+                    <img class="img-fluid" src="{{user.companymodel.logo.url}}" style="width:70px;height:50px;" alt="this is the logo">
+                    {% endif %}
+                    <h1>{{user.name}}</h1>
+                    <h2>Welcome to our zone</h2>
+
+                </div>
+                <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+
+                    <img src="{% static 'assets/company/img/hero-img.png' %}" class="img-fluid animated" alt="">
+                </div>
+            </div>
+        </div>
+
+    </section><!-- End Hero -->
+
+    <main id="main">
+
+
+        <!-- ======= Portfolio Section ======= -->
+        <section id="products" class="portfolio">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-title">
+                    <h2>Products: {{product_category}}</h2>
+                    <p></p>
+                </div>
+                <div>
+                    <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+                        <li><a href="{% url 'company-feed' user.id %}"> Show All Products </a> </li>
+                    </ul>
+        
+                </div>
+
+
+  
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+            {% for product in product_list %}
+            {% if product.category == product_category %}
+
+
+            <div class="col-lg-3 col-md-4 portfolio-item filter-app">
+                <div class="portfolio-img">
+                    {% if product.image %}
+                    <img src="{{product.image.url}}" class="img-fluid" alt="">
+                    {% else %}
+                    <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
+                    {% endif %}
+                </div>
+                <div class="portfolio-info">
+                    <h4>{{product.name}}</h4>
+                    <p>{{product.price}}</p>
+                    {% if product.refill %}
+                    <p>Coming stock in:{{product.refill}}</p>
+                    {% endif %}
+                    {% if request.user == user and request.user.is_company %}
+                    <a href="{% url 'edit-product' product.id %}"  class="venobox preview-link" title="Edit Product"><i class="bx bx-plus"></i></a>
+                    {% else %}
+                    <a href=""  class="venobox preview-link" title="Add to cart"><i class="bx bx-plus"></i></a>
+                    {% endif %}
+                    {% if request.user == user and request.user.is_company %}
+                    <a href="" class="details-link" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    {% endif %}
+                  </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+
+
+        </div>
+
+       
+
+
+    </div>
+
+
+            
+</section><!-- End Portfolio Section -->
+        <!-- ======= Contact Section ======= -->
+        <section id="about" class="contact">
+            <div class="container" data-aos="fade-up">
+                <div class="section-title">
+                    <h2>About Us</h2>
+                </div>
+
+                <div class="text-center">
+                    {% if user.companymodel.about %}
+                    <p>{{user.companymodel.about|safe}}</p>
+                    {% endif %}
+
+                </div>
+
+                <div class="row">
+
+                    <div class="info">
+                        <div class="address">
+
+                            <i class="icofont-google-map"></i>
+                            <h4>Location:</h4>
+                            {% if user.companymodel.location %}
+                            <p>{{user.companymodel.location}}</p>
+                            {% else %}
+                            {% if request.user == user %}
+                            <p>
+                                <a href="{% url 'company-edit-profile' %}">+ Add Location</a>
+                                {% endif %}
+                                {% endif %}
+                        </div>
+
+                        <div class="email">
+                            <i class="icofont-envelope"></i>
+                            <h4>Email:</h4>
+                            <p>{{user.email}}</p>
+                        </div>
+
+                        <div class="phone">
+                            <i class="icofont-phone"></i>
+                            <h4>Call:</h4>
+                            {% if user.companymodel.phone %}
+                            <p>{{user.companymodel.phone}}</p>
+                            {% else %}
+                            {% if request.user == user %}
+                            <p>
+                                <a href="{% url 'company-edit-profile' %}">+ Add Phone Number</a>
+                                {% endif %}
+                                {% endif %}
+                        </div>
+
+                        {% if user.companymodel.location %}
+                        <div class="container">
+                            <div class="text-center">
+                                <iframe allowfullscreen="" aria-hidden="false" frameborder="0" height="450" src={{location_link|safe }}
+                                        style="border:0;" tabindex="0" width="100%"></iframe>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+            </div>
+        </section><!-- End Contact Section -->
+
+    </main><!-- End #main -->
+
+
+
+    <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'assets/company/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/company/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/company/vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'assets//company/vendor/php-email-form/validate.js' %}"></script>
+    <script src="{% static 'assets/company/vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'assets/company/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'assets/company/vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'assets/company/vendor/aos/aos.js' %}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'assets/company/js/main.js' %}"></script>
+
+
+
+</body>
+
+</html>
+
+{% endblock %}

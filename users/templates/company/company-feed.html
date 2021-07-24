@@ -41,18 +41,18 @@
       <h1 class="logo mr-auto"><a href="{% url 'home' %}">DeliveryJet</a></h1>
 
 
-      <nav class="nav-menu d-none d-lg-block">
-        <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#products">Products</a></li>
-          {% if request.user == user and request.user.is_company %}
-          <li ><a href="{% url 'post-product' %}">Add Products</a></li>
-          <li ><a href= "{% url 'company-edit-profile' %}">Edit Details</a></li>
-          <li ><a href= "{% url 'account_settings' user.id}">Account Settings</a></li>
-          {% endif %}
-          <li  > <a class="get-started-btn scrollto" href="{% url 'logout' %}">Log Out </a></li>
-        </ul>
-      </nav><!-- .nav-menu -->
+     <nav class="nav-menu d-none d-lg-block">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#products">Products</a></li>
+                    {% if request.user == user and request.user.is_company %}
+                    <li><a href="{% url 'post-product' %}">Add Products</a></li>
+                    <li><a href="{% url 'company-edit-profile' %}">Edit Details</a></li>
+                    <li><a href="">Account Settings</a></li>
+                    {% endif %}
+                    <li> <a class="get-started-btn scrollto" href="{% url 'logout' %}">Log Out </a></li>
+                </ul>
+            </nav><!-- .nav-menu -->
 
 
     </div>
@@ -88,24 +88,23 @@
     <section id="products" class="portfolio">
       <div class="container" data-aos="fade-up">
 
+       
         <div class="section-title">
-          <h2>Products</h2>
-         
-        </div>
-        <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
-
+          <h2>All Products</h2>
+          <p>This page shows all products. If you want to browse products of a particular category, please choose appropriate option from the given list.</p>
+      </div>
+      
+      <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
           {% for cat in product_category %}
-          <li  data-filter=".filter-app">{{cat}}</li>
+          <li><a href="{% url 'company-feed-category' user.id cat%}"> {{cat }} </a> </li>
           {% endfor %}
-        </ul>
+      </ul>
   
-          {% for cat in product_category %}
+     
           <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
             {% for product in product_list %}
-            {% if product.category == cat %}
-             
-         
-               <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+     
+               <div class="col-lg-3 col-md-4 portfolio-item filter-app">
                  <div class="portfolio-img">
                    {% if product.image %}
                    <img src="{{product.image.url}}" class="img-fluid" alt="">
@@ -129,12 +128,12 @@
                    {% endif %}
                  </div>
                </div>
-               {% endif %}
                {% endfor %}
               
      
              </div>
-          {% endfor %}
+             
+
        
 
       </div>
