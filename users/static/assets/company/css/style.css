@@ -1012,6 +1012,7 @@ section {
   top: calc(50% - 18px);
   color: #fff;
   transition: 0.3s;
+  
 }
 
 .portfolio .portfolio-item .portfolio-info .preview-link:hover, .portfolio .portfolio-item .portfolio-info .details-link:hover {
@@ -1020,7 +1021,7 @@ section {
 
 .portfolio .portfolio-item .portfolio-info .details-link {
   right: 10px;
-}
+} 
 
 .portfolio .portfolio-item:hover .portfolio-img img {
   transform: scale(1.15);

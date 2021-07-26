@@ -10,8 +10,7 @@ from django.db.models import Q
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
-from .decorators import *
-from .decorators import *
+from users.decorators import *
 from .forms import *
 from .utils import *
 
@@ -92,7 +91,6 @@ def login_page(request):
                 return redirect('deliveryMan-feed',user.id)
 
         else:
-            print("bye")
             return render(request, 'login.html', {'form': form})
     form = LoginForm()
     context = {
@@ -191,11 +189,37 @@ def company_feed(request, pk):
     except EmptyPage:
         product_list = paginator.page(paginator.num_pages)
 
+
+    order_form = OrderForm()
+    if request.method == 'POST':
+        order_form = OrderForm(request.POST)
+        if order_form.is_valid():
+            order = order_form.save(commit=False)
+            product_name=request.POST['product_name']
+            product=ProductModel.objects.get(user=user,name=product_name)
+            try:
+                ordered = OrderModel.objects.get(buyer=request.user, product=product)
+            except:
+                ordered = None
+            if ordered is not None:
+                ordered.count=ordered.count+1
+                ordered.save()
+            else:
+
+                order.buyer = request.user
+                order.product=product
+                order.count=1
+                order.save()
+
+            return redirect('company-feed',user.id)
+
+
     context = {
         'user': user,
         'location_link': location_link,
         'product_list': product_list,
         'product_category':product_category,
+        'order_form':order_form,
     }
     return render(request, 'company/company-feed.html', context)
 
@@ -219,6 +243,29 @@ def company_feed_category(request, pk, cat):
     
     paginator = Paginator(product_list, 5)
     page = request.GET.get('page', 1)
+
+    order_form = OrderForm()
+    if request.method == 'POST':
+        order_form = OrderForm(request.POST)
+        if order_form.is_valid():
+            order = order_form.save(commit=False)
+            product_name=request.POST['product_name']
+            product=ProductModel.objects.get(user=user,name=product_name)
+            try:
+                ordered = OrderModel.objects.get(buyer=request.user, product=product)
+            except:
+                ordered = None
+            if ordered is not None:
+                ordered.count=ordered.count+1
+                ordered.save()
+            else:
+
+                order.buyer = request.user
+                order.product=product
+                order.count=1
+                order.save()
+
+            return redirect('company-feed-category',user.id,cat)
     try:
         product_list = paginator.page(page)
     except PageNotAnInteger:

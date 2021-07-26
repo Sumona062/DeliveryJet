@@ -31,7 +31,16 @@
   <link href="{% static 'assets/company/css/style.css' %}" rel="stylesheet">
 
 </head>
-
+<style>
+    .preview-link {
+        background-color: Transparent;
+        background-repeat:no-repeat;
+        border: none;
+        cursor:pointer;
+        overflow: hidden;
+        outline:none;
+    }
+    </style>
 <body>
 
     <!-- ======= Header ======= -->
@@ -120,14 +129,19 @@
                 </div>
                 <div class="portfolio-info">
                     <h4>{{product.name}}</h4>
-                    <p>{{product.price}}</p>
+                    <p>Price: {{product.price}}</p>
                     {% if product.refill %}
-                    <p>Coming stock in:{{product.refill}}</p>
+                    <p>Coming stock in: {{product.refill}}</p>
                     {% endif %}
                     {% if request.user == user and request.user.is_company %}
                     <a href="{% url 'edit-product' product.id %}"  class="venobox preview-link" title="Edit Product"><i class="bx bx-plus"></i></a>
                     {% else %}
-                    <a href=""  class="venobox preview-link" title="Add to cart"><i class="bx bx-plus"></i></a>
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <input id="product_name" type="hidden" name="product_name" value={{product.name}} >
+    
+                       <button class="venobox preview-link" title="Add to cart" type="submit"><i class="bx bx-plus"></i></button>
+                      </form>
                     {% endif %}
                     {% if request.user == user and request.user.is_company %}
                     <a href="" class="details-link" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>

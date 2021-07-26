@@ -3,6 +3,7 @@ from django.contrib.auth.forms import authenticate
 from .models import *
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.forms import ModelForm
+from order.models import*
 
 
 class LoginForm(forms.Form):
@@ -108,3 +109,9 @@ class AccountInformationForm(ModelForm):
     class Meta:
         model = User
         fields = ('name', 'email')
+
+
+class OrderForm(ModelForm):
+    class Meta:
+        model = OrderModel
+        fields = ()
