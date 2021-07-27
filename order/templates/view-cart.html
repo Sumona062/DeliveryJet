@@ -6,9 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-
-
+	
 <link href="{% static 'assets/company/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
   <link href="{% static 'assets/company/vendor/icofont/icofont.min.css' %}" rel="stylesheet">
   <link href="{% static 'assets/company/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
@@ -22,6 +20,10 @@
 </head>
 <body></body>
 <style>
+	.btn-success{
+		width: max-content;
+
+	}
     .table>tbody>tr>td, .table>tfoot>tr>td{
     vertical-align: middle;
 }
@@ -91,7 +93,6 @@
          
         <p style="color:white ;font-size:25px;">HELLO!!!</p>
           <h1>{{user.name}}</h1>
-
         </div>
         <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
             {% if user.buyermodel.image %}
@@ -103,48 +104,70 @@
 
   </section>
   <main id="main">
+
+	
+
 <div class="container">
 	<table id="cart" class="table table-hover table-condensed">
+		
     				<thead>
 						<tr>
-							<th style="width:50%">Product</th>
-							<th style="width:10%">Price</th>
-							<th style="width:8%">Quantity</th>
-							<th style="width:22%" class="text-center">Subtotal</th>
-							<th style="width:10%"></th>
+							<th style="width:30%" class="text-center">Product</th>
+							<th style="width:15%" class="text-center">Price</th>
+							<th style="width:10%"  class="text-center">Quantity</th>
+							<th style="width:25%" class="text-center">Subtotal</th>
+							<th style="width:20%"></th>
 						</tr>
 					</thead>
+					<div>
 					<tbody>
+						{% for order in order_list %}
 						<tr>
+							<form method="post" action=""  >
+								{% csrf_token %}
+								{{form.media}}
+								<input id="product_user" type="hidden" name="product_user" value={{order.product.user}} >
+								<input id="product_name" type="hidden" name="product_name" value={{order.product.name}} >
+						
 							<td data-th="Product">
 								<div class="row">
-									<div class="col-sm-3 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive"/></div>
+									<div class="col-sm-3 hidden-xs">
+										<img src="{{order.product.image.url}}" width="100" height="100" alt="..." class="img-responsive"/>
+									</div>
 									<div class="col-sm-10">
-										<h4 class="nomargin">Product 1</h4>
-										<p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
+
+										<h5 class="nomargin">{{order.product.name}}</h5>
+										<p>Company Name: {{order.product.user.name}}</p>
+								
 									</div>
 								</div>
 							</td>
-							<td data-th="Price">$1.99</td>
-							<td data-th="Quantity">
-								<input type="number" class="form-control text-center" value="1">
-							</td>
-							<td data-th="Subtotal" class="text-center">1.99</td>
+							
+					
+							<td data-th="Price" id="price"  name="price"  class="text-center" value="">{{order.product.price}} Taka</td>
+							<td data-th="Quantity" id="quantity"  name="quantity" class="text-center">{{order.count}}</td>
+							<td data-th="Subtotal" class="text-center" id="subtotal" name="subtotal">{{order.total}} Taka</td>
 							<td class="actions" data-th="">
-								<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-								<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>								
+								
+								<button class="btn btn-info" type="submit" id="plus" name="plus" value=true><i class="fa fa-plus"></i></button>
+								<button class="btn btn-info" type="submit" id="minus" name="minus" value=true><i class="fa fa-minus"></i></button>
+								<button class="btn btn-danger" type="submit" id="delete" name="delete" value=true><i class="fa fa-trash"></i></button>	
+								</form>							
 							</td>
+							
 						</tr>
+						{% endfor %}
+						
 					</tbody>
+				</div>
+			
 					<tfoot>
-						<tr class="visible-xs">
-							<td class="text-center"><strong>Total 1.99</strong></td>
-						</tr>
+						
 						<tr>
-							<td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+							<td><a href="{% url 'buyer-feed' request.user.id %}"  class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
 							<td colspan="2" class="hidden-xs"></td>
-							<td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
-							<td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+							<td class="hidden-xs text-center"><strong>Total: {{total}} Taka</strong></td>
+							<td><a href="#" class="btn btn-success">Checkout <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 					</tfoot>
 				</table>

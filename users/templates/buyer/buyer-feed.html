@@ -311,8 +311,9 @@
                 {% endif %}
                 {% if com.companymodel.phone %}
                 <p>contact:{{com.companymodel.phone}}</p>
-                <a href="{% url 'company-feed' com.id %}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
                 {% endif %}
+                <a href="{% url 'company-feed' com.id %}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+                
               </div>
            
             {% endif %}

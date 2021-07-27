@@ -164,7 +164,7 @@ class PreferredAreaModel(models.Model):
 class ProductModel(models.Model):
     user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
     name=models.CharField(max_length=255, null=True, blank=True)
-    price=models.CharField(max_length=255, null=True, blank=True)
+    price=models.IntegerField(null=True, blank=True)
     category=models.CharField(max_length=255, null=False, blank=False,default="")
     image=models.ImageField(null=True,blank=True)
     refill=models.CharField(max_length=255, null=True, blank=True)

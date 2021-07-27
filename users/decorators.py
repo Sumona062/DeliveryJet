@@ -7,9 +7,9 @@ def unauthenticated_user(view_func):
         if request.user.is_authenticated and request.user.is_company:
             return redirect('company-feed', request.user.id)
         elif request.user.is_authenticated and request.user.is_buyer:
-            return redirect('buyer-feed')
+            return redirect('buyer-feed',request.user.id)
         elif request.user.is_authenticated and request.user.is_DeliveryMan:
-            return redirect('deliveryMan-feed')
+            return redirect('deliveryMan-feed',request.user.id)
         else:
             return view_func(request, *args, **kwargs)
 

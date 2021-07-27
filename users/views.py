@@ -14,9 +14,8 @@ from users.decorators import *
 from .forms import *
 from .utils import *
 
+@unauthenticated_user
 def home(request):
-   
-
     if request.method == 'POST':
         formBuyer = BuyerRegistrationForm(request.POST)
         formCompany= CompanyRegistrationForm(request.POST)
@@ -180,14 +179,6 @@ def company_feed(request, pk):
     product_category=uniqueCategory(product_list)
 
 
-    paginator = Paginator(product_list, 5)
-    page = request.GET.get('page', 1)
-    try:
-        product_list = paginator.page(page)
-    except PageNotAnInteger:
-        product_list = paginator.page(1)
-    except EmptyPage:
-        product_list = paginator.page(paginator.num_pages)
 
 
     order_form = OrderForm()
@@ -203,12 +194,14 @@ def company_feed(request, pk):
                 ordered = None
             if ordered is not None:
                 ordered.count=ordered.count+1
+                ordered.total=product.price*ordered.count
                 ordered.save()
             else:
 
                 order.buyer = request.user
                 order.product=product
                 order.count=1
+                order.total=product.price
                 order.save()
 
             return redirect('company-feed',user.id)
@@ -241,8 +234,6 @@ def company_feed_category(request, pk, cat):
 
     product_list = ProductModel.objects.filter(user=user)
     
-    paginator = Paginator(product_list, 5)
-    page = request.GET.get('page', 1)
 
     order_form = OrderForm()
     if request.method == 'POST':
@@ -257,22 +248,18 @@ def company_feed_category(request, pk, cat):
                 ordered = None
             if ordered is not None:
                 ordered.count=ordered.count+1
+                ordered.total=product.price*ordered.count
                 ordered.save()
             else:
 
                 order.buyer = request.user
                 order.product=product
                 order.count=1
+                order.total=product.price
                 order.save()
 
             return redirect('company-feed-category',user.id,cat)
-    try:
-        product_list = paginator.page(page)
-    except PageNotAnInteger:
-        product_list = paginator.page(1)
-    except EmptyPage:
-        product_list = paginator.page(paginator.num_pages)
-
+    
     context = {
         'user': user,
         'location_link': location_link,
