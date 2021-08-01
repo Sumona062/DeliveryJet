@@ -48,7 +48,7 @@
           {% if request.user == user and request.user.is_buyer %}
           <li ><a href="{% url 'view-cart' user.id %}">view cart</a></li>
           <li ><a href= "{% url 'buyer-edit-profile' %}">Edit Details</a></li>
-          <li ><a href= "{% url 'account_settings' user.id}">Account Settings</a></li>
+          <li ><a href= "{% url 'account-settings' user.id %}">Account Settings</a></li>
           {% endif %}
           <li  > <a class="get-started-btn scrollto" href="{% url 'logout' %}">Log Out </a></li>
         </ul>

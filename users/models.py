@@ -125,10 +125,8 @@ class CompanyModel(models.Model):
 
 class TimeSlotModel(models.Model):
     Time_choices = [
-        ('9am-12pm', '9am-12pm'),
-        ('12pm-3pm', '12pm-3pm'),
-        ('3pm-6pm', '3pm-6pm'),
-        ('6pm-9pm', '6pm-9pm'),
+        ('9am-3pm','9am-3pm'),
+        ('3pm-9pm', '3pm-9pm'),
     ]
     Day_choices = [
         ('Sunday', 'Sunday'),
@@ -136,10 +134,14 @@ class TimeSlotModel(models.Model):
         ('Tuesday', 'Tuesday'),
         ('Wednesday', 'Wednesday'),
         ('Thursday', 'Thursday'),
+         ('Friday', 'Friday'),
+         ('Saturday', 'Saturday'),
 
     ]
     time=models.CharField(max_length=255, choices=Time_choices, null=True, blank=True)
     Day = models.CharField(max_length=255, choices=Day_choices, null=True, blank=True)
+    class Meta:
+        unique_together = ('time', 'Day',)
 
 class AddressPhoneModel(models.Model):
     user=models.ForeignKey(User, null=True,on_delete=models.CASCADE)
@@ -154,8 +156,8 @@ class AddressPhoneModel(models.Model):
 
 
 class AvailabilityModel(models.Model):
-    address = models.ForeignKey(AddressPhoneModel, null=True, on_delete=models.SET_NULL)
-    slot_id=models.ForeignKey(TimeSlotModel, null=True,on_delete=models.SET_NULL)
+    address = models.ForeignKey(AddressPhoneModel, null=True, on_delete=models.CASCADE)
+    slot_id=models.ForeignKey(TimeSlotModel, null=True,on_delete=models.CASCADE)
 
 class PreferredAreaModel(models.Model):
     user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
