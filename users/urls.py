@@ -23,6 +23,8 @@ urlpatterns = [
     
     path('company/company-edit-profile', company_edit_profile, name='company-edit-profile'),
     path('customer/customer-edit-profile', buyer_edit_profile, name='buyer-edit-profile'),
+    path('customer/add-address', add_availability, name='add-availability'),
+    path('customer/edit-address/<str:pk>/', edit_availability, name='edit-availability'),
     path('deliveryMan/deliveryMan-edit-profile', deliveryMan_edit_profile, name='deliveryMan-edit-profile'),
 
     path('post-product/', post_product, name='post-product'),
@@ -32,6 +34,5 @@ urlpatterns = [
     path('account-settings/<str:pk>/', account_settings, name='account-settings'),
 
     path('account/buyer-feed/<str:pk>/view_cart', view_cart, name='view-cart'),
-   
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

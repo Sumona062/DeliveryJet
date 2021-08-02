@@ -196,37 +196,49 @@ div.relative {
                 </div>
                 
                 
-                <div class="card2 card border-2">
-                   
-                    <form method="post" action="" enctype="multipart/form-data" class="p-4 p-md-5 border rounded">
-                        <h3 class="text-black mb-5 border-bottom pb-2">Edit Customer Details</h3>
-                        {% csrf_token %}
-                        {{form.media}}
-    
-                        <div class="form-group">
-                            <label>Upload image</label> <br>
-                            {{form.image|add_class:"form-control"}}
-                        </div>
-                        
-    
-                        <div class="form-group">
-                            <label>Facebook</label>
-                            {{form.facebook|add_class:"form-control"}}
-                        </div>
-    
-    
-                        <div class="form-group">
-                            <label>Gender</label> <br>
-                            {{form.gender|add_class:"form-control"}}
-                        </div>
-                       
-                        <div class="col-12">
-                            <button class="btn btn-block btn-primary " type="submit">Save</button>
-                        </div>
-    
-                    </form>
-                </div>
-                {% for message in messages %}
+                
+            
+        
+        
+                    <div class="card2 card border-2">
+                        <form class="p-4 p-md-5 border rounded"  enctype="multipart/form-data" method="post" action="">
+                            {% csrf_token %}
+        
+                            <h3 class="text-black mb-5 border-bottom pb-2">{{task}} Availibity Slot</h3>
+        
+                            <div class="form-group">
+                                <div class="col-md-12 mb-3 mb-md-0">
+                                    <label class="text-black">Time </label>
+                                    {{ form.time }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12 mb-3 mb-md-0">
+                                    <label class="text-black">Days </label>
+                                    {{ form.Days }}
+                                </div>
+                            </div>
+        
+                            <div class="form-group">
+                                <div class="col-md-12 mb-3 mb-md-0">
+                                    <label class="text-black">Address</label>
+                                    {{ form.address }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12 mb-3 mb-md-0">
+                                    <label class="text-black">Contact no:</label>
+                                    {{form.phone}}
+                                </div>
+                            </div>
+        
+        
+                            <div class="col-12">
+                                <button class="btn btn-block btn-primary " type="submit">Save
+                                </button>
+                            </div>
+                        </form>
+                        {% for message in messages %}
                     <div class="alert alert-success">
                         <a class="close" href="#" data-dismiss="alert">×</a>
         
@@ -234,7 +246,9 @@ div.relative {
         
                     </div>
                     {% endfor %}
-            
+        
+                    </div>
+                    
         
       
     </div>
@@ -243,9 +257,4 @@ div.relative {
 </html>
 
 
-<script>
-    const form_fields = document.getElementsByTagName("input")
-
-    form_fields[2].placeholder = 'facebook'
-</script>
 {% endblock %}

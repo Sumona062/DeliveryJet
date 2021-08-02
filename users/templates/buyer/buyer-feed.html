@@ -378,6 +378,45 @@
 
       </div>
     </section><!-- End Portfolio Section -->
+    <section id="about" class="contact">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+           <h2>address List</h2>
+        </div>
+
+  
+        
+        <div class="row">
+         
+            <div class="info">
+              
+              
+              <div class="address">
+                <p>
+                  <a href="{% url 'add-availability' %}"><h4>+ Add Location</h4></a></p>
+
+               
+                {% for avail in availability %}
+                <a href="{% url 'edit-availability' avail.id %}"  title="Edit Address"><i class="icofont-google-map" ></i></a>
+                <h4>Location:</h4>
+                <p>{{avail.address}}</br>
+                Time Slot: {{avail.Days}}   Time: {{avail.time}}</br>
+                Contact No: {{avail.phone}}</p>
+               
+                {% endfor %}
+            </div>
+             
+          </div>
+
+          
+
+        </div>
+       
+
+       
+
+      </div>
+    </section><!-- End Contact Section -->
 
 
   </main><!-- End #main -->

@@ -123,41 +123,19 @@ class CompanyModel(models.Model):
 
  
 
-class TimeSlotModel(models.Model):
+class AvailabilityModel(models.Model):
     Time_choices = [
         ('9am-3pm','9am-3pm'),
         ('3pm-9pm', '3pm-9pm'),
     ]
-    Day_choices = [
-        ('Sunday', 'Sunday'),
-        ('Monday', 'Monday'),
-        ('Tuesday', 'Tuesday'),
-        ('Wednesday', 'Wednesday'),
-        ('Thursday', 'Thursday'),
-         ('Friday', 'Friday'),
-         ('Saturday', 'Saturday'),
-
-    ]
+    buyer=models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    address = models.CharField(max_length=1000, null=False, blank=False,default="")
+    phone=models.CharField(max_length=255, null=False, blank=False,default="")
     time=models.CharField(max_length=255, choices=Time_choices, null=True, blank=True)
-    Day = models.CharField(max_length=255, choices=Day_choices, null=True, blank=True)
+    Days = models.CharField(max_length=255, null=True, blank=True)
+
     class Meta:
-        unique_together = ('time', 'Day',)
-
-class AddressPhoneModel(models.Model):
-    user=models.ForeignKey(User, null=True,on_delete=models.CASCADE)
-    division=models.CharField(max_length=100, null=True, blank=True)
-    district=models.CharField(max_length=100, null=True, blank=True)
-    thana=models.CharField(max_length=100, null=True, blank=True)
-    areaName=models.CharField(max_length=100, null=True, blank=True)
-    holdingNo=models.CharField(max_length=100, null=True, blank=True)
-    postOffice=models.CharField(max_length=100, null=True, blank=True)
-    additonal=models.CharField(max_length=1000, null=True, blank=True)
-    phone=models.CharField(max_length=255, null=True, blank=True)
-
-
-class AvailabilityModel(models.Model):
-    address = models.ForeignKey(AddressPhoneModel, null=True, on_delete=models.CASCADE)
-    slot_id=models.ForeignKey(TimeSlotModel, null=True,on_delete=models.CASCADE)
+        unique_together = ('buyer', 'address','Days','time')
 
 class PreferredAreaModel(models.Model):
     user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)

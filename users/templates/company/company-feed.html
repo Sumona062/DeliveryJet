@@ -137,7 +137,7 @@
                     {% csrf_token %}
                     <input id="product_name" type="hidden" name="product_name" value={{product.name}} >
 
-                   <button class="venobox preview-link" title="Add to cart" type="submit"><i class="bx bx-plus"></i></button>
+                   <button class="venobox preview-link" title="Add to cart" type="submit"><i class="fa fa-shopping-cart"></i></button>
                   </form>
                   {% endif %}
                    {% if request.user == user and request.user.is_company %}

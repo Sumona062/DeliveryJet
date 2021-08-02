@@ -115,3 +115,11 @@ class OrderForm(ModelForm):
     class Meta:
         model = OrderModel
         fields = ()
+
+
+class AvailabilityForm(ModelForm):
+    class Meta:
+        model = AvailabilityModel
+        fields = '__all__'
+        exclude = ['buyer']
+
