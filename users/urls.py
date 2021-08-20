@@ -24,7 +24,7 @@ urlpatterns = [
     path('company/company-edit-profile', company_edit_profile, name='company-edit-profile'),
     path('customer/customer-edit-profile', buyer_edit_profile, name='buyer-edit-profile'),
     path('customer/add-address', add_availability, name='add-availability'),
-    path('customer/edit-address/<str:pk>/', edit_availability, name='edit-availability'),
+    path('customer/delete-address/<str:pk>/', delete_availability, name='delete-availability'),
     path('deliveryMan/deliveryMan-edit-profile', deliveryMan_edit_profile, name='deliveryMan-edit-profile'),
 
     path('post-product/', post_product, name='post-product'),

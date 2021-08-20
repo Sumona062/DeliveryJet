@@ -347,12 +347,10 @@ def buyer_edit_profile(request):
 @login_required(login_url='login')
 @show_to_buyer(allowed_roles=['admin', 'is_buyer'])
 def add_availability(request):
-    task="Add"
     form=AvailabilityForm()
     if request.method == 'POST':
         form=AvailabilityForm(request.POST, request.FILES)
         if form.is_valid():
-            print("valid")
             availability=form.save(commit=False)
             availability.buyer=request.user
             print(availability.buyer,availability.time,availability.Days,availability.address)
@@ -363,33 +361,20 @@ def add_availability(request):
             return redirect('add-availability')
 
     context = {
-        'task': task,
         'form':form,
     }
     return render(request, 'buyer/add-availability.html', context)
 
-    
 @login_required(login_url='login')
 @show_to_buyer(allowed_roles=['admin', 'is_buyer'])
-def edit_availability(request,pk):
-    task="Edit"
-    avail = AvailabilityModel.objects.get(id=pk)
-    form=AvailabilityForm(instance=avail)
-    if request.method == 'POST':
-        form=AvailabilityForm(request.POST, request.FILES,instance=avail)
-        if form.is_valid():
-            form.save()
-            return redirect('buyer-feed', request.user.id)
-        else:
-            messages.error(request, 'There are a few problems')
-            return redirect('edit-availability')
-
-    context = {
-        'task': task,
-        'form':form,
-    }
-    return render(request, 'buyer/add-availability.html', context)
+def delete_availability(request,pk):
+    availability=AvailabilityModel.objects.get(id=pk)
+    print(availability.buyer,availability.address)
+    availability.delete()
+   
     
+    return redirect('buyer-feed', request.user.id)
+ 
 @login_required(login_url='login')
 @show_to_company(allowed_roles=['admin', 'is_company'])
 def post_product(request):
