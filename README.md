@@ -31,3 +31,22 @@ https://github.com/Sumona062/DeliveryJet.git
 ```
 -python .\manage.py runserver
 ```
+
+# Phase-1
+```
+-Sign Up
+-Log In
+-Company Feed,Customer Feed
+-Edit company,Customer profile
+-Post product
+-Edit Product
+-Account Settings
+```
+# Phase-2
+-Delivery Man Feed
+-Edit DeliveryMan Profile
+-Add to cart
+-Edit Cart
+-View Cart
+-Add and Delete Availability Address-time slot
+-Add and Delete Preferred Area
