@@ -123,3 +123,9 @@ class AvailabilityForm(ModelForm):
         fields = '__all__'
         exclude = ['buyer']
 
+class PreferredAreaForm(ModelForm):
+    class Meta:
+        model = PreferredAreaModel
+        fields = '__all__'
+        exclude = ['user']
+

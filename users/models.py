@@ -138,8 +138,15 @@ class AvailabilityModel(models.Model):
         unique_together = ('buyer', 'address','Days','time')
 
 class PreferredAreaModel(models.Model):
+    Time_choices = [
+        ('9am-3pm','9am-3pm'),
+        ('3pm-9pm', '3pm-9pm'),
+    ]
     user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
     area=models.CharField(max_length=255, null=True, blank=True)
+    time=models.CharField(max_length=255, choices=Time_choices, null=True, blank=True)
+    class Meta:
+        unique_together = ('user', 'area',)
 
 class ProductModel(models.Model):
     user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
