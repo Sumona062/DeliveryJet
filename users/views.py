@@ -321,7 +321,14 @@ def deliveryMan_edit_profile(request):
     return render(request, 'deliveryMan/deliveryMan-edit-profile.html', context)
 
 
-    
+@login_required(login_url='login')
+@show_to_deliveryMan(allowed_roles=['admin', 'is_DeliveryMan'])
+def delete_preferredArea(request,pk):
+    PreferredArea=PreferredAreaModel.objects.get(id=pk)
+    PreferredArea.delete()
+
+    return redirect('deliveryMan-feed', request.user.id)
+
 @login_required(login_url='login')
 @show_to_buyer(allowed_roles=['admin', 'is_buyer'])
 def buyer_edit_profile(request):
