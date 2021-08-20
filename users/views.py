@@ -126,12 +126,16 @@ def buyer_feed(request, pk):
 @show_to_deliveryMan(allowed_roles=['admin', 'is_DeliveryMan'])
 def deliveryMan_feed(request,pk):
     user = User.objects.get(id=pk)
+    preferredArea=PreferredAreaModel.objects.filter(user=request.user)
+    for pref in preferredArea:
+        print(pref.time,pref.user,pref.area)
     
     context = {
         'user': user,
+        'preferredArea':preferredArea,
     }
 
-    return render(request, 'deliveryMan/deliveryMan-feed.html')
+    return render(request, 'deliveryMan/deliveryMan-feed.html',context)
 
 
 def about(request):
@@ -292,10 +296,19 @@ def company_edit_profile(request):
 def deliveryMan_edit_profile(request):
     deliveryMan = request.user.deliverymanmodel
     form = DeliveryManEditProfileForm(instance=deliveryMan)
+    prefAreaform=PreferredAreaForm()
     if request.method == 'POST':
         form = DeliveryManEditProfileForm(request.POST, request.FILES, instance=deliveryMan)
+        prefAreaform=PreferredAreaForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            return redirect('deliveryMan-feed', request.user.id)
+
+        if prefAreaform.is_valid():
+            prefArea=prefAreaform.save(commit=False)
+            prefArea.user=request.user
+            print(prefArea.user,prefArea.area)
+            prefAreaform.save()
             return redirect('deliveryMan-feed', request.user.id)
         else:
             messages.error(request, 'There are a few problems')
@@ -303,6 +316,7 @@ def deliveryMan_edit_profile(request):
 
     context = {
         'form': form,
+        'prefAreaform':prefAreaform
     }
     return render(request, 'deliveryMan/deliveryMan-edit-profile.html', context)
 
