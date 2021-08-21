@@ -77,6 +77,9 @@ class BuyerModel(models.Model):
     facebook = models.CharField(max_length=255, null=True, blank=True)
     gender = models.CharField(max_length=255, choices=GENDER_CHOICES, null=True, blank=True)
 
+    def getBuyer(self):
+        return self.user
+
 class DeliveryManModel(models.Model):
     GENDER_CHOICES = [
         ('Male', 'Male'),
@@ -99,6 +102,9 @@ class DeliveryManModel(models.Model):
     documentID=models.CharField(max_length=255,  null=False, blank=False,default="")
     documentType=models.CharField(max_length=255, choices=TYPE_CHOICES, null=False, blank=False,default="")
 
+    def getDeliveryMan(self):
+        return self.user
+
 class CompanyModel(models.Model):
     TYPE_CHOICES=[
         ('Book Store','Book Store'),
@@ -120,6 +126,9 @@ class CompanyModel(models.Model):
     website = models.CharField(max_length=255, null=True, blank=True)
     type=models.CharField(max_length=255, choices=TYPE_CHOICES, null=False, blank=False, default="")
     phone = models.CharField(max_length=255, null=True, blank=True)
+
+    def getCompany(self):
+        return self.user
 
  
 
@@ -159,3 +168,9 @@ class ProductModel(models.Model):
 
     class Meta:
         unique_together = ('user', 'name',)
+
+    def getProductName (self):
+        return self.name
+
+    def getCompany (self):
+        return self.user
