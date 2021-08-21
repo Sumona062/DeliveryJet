@@ -29,6 +29,7 @@ urlpatterns = [
 
     path('post-product/', post_product, name='post-product'),
     path('edit-product/<str:pk>/', edit_product, name='edit-product'),
+    path('delete-product/<str:pk>/', delete_product, name='delete-product'),
 
     # utilities
     path('account-settings/<str:pk>/', account_settings, name='account-settings'),

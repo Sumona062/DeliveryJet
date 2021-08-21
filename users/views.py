@@ -329,6 +329,15 @@ def delete_preferredArea(request,pk):
 
     return redirect('deliveryMan-feed', request.user.id)
 
+    
+@login_required(login_url='login')
+@show_to_company(allowed_roles=['admin', 'is_company'])
+def delete_product(request,pk):
+    product=ProductModel.objects.get(id=pk)
+    product.delete()
+
+    return redirect('company-feed', request.user.id)
+
 @login_required(login_url='login')
 @show_to_buyer(allowed_roles=['admin', 'is_buyer'])
 def buyer_edit_profile(request):
