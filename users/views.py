@@ -331,6 +331,13 @@ def delete_preferredArea(request,pk):
 
     
 @login_required(login_url='login')
+@show_to_buyer(allowed_roles=['admin', 'is_buyer'])
+def delete_availability(request,pk):
+    availability=AvailabilityModel.objects.get(id=pk)
+    availability.delete()
+
+    return redirect('buyer-feed', request.user.id)
+@login_required(login_url='login')
 @show_to_company(allowed_roles=['admin', 'is_company'])
 def delete_product(request,pk):
     product=ProductModel.objects.get(id=pk)
