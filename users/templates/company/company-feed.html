@@ -127,6 +127,7 @@
                  <div class="portfolio-info">
                    <h4>{{product.name}}</h4>
                    <p>Price: {{product.price}} Taka</p>
+                   <p>Available: {{product.availQuantity}}</p>
                    {% if product.refill %}
                    <p>Coming stock in: {{product.refill}}</p>
                    {% endif %}
@@ -141,7 +142,7 @@
                   </form>
                   {% endif %}
                    {% if request.user == user and request.user.is_company %}
-                   <a href="" class="details-link" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                   <a href="{% url 'delete-product' product.id %}" class="details-link" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
                    {% endif %}
                  </div>
                </div>

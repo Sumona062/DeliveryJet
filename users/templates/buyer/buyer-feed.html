@@ -397,7 +397,7 @@
 
                
                 {% for avail in availability %}
-                <a href="{% url 'delete-availability' avail.id %}"><i class="icofont-trash" title="Delete Address"></i></a>
+                <a href="{% url 'delete-availability' avail.id %}"  title="Delete Address"><i class="icofont-trash" ></i></a>
                 <h4>Location:</h4>
                 <p>{{avail.address}}</br>
                 Time Slot: {{avail.Days}}   Time: {{avail.time}}</br>

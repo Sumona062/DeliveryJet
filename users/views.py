@@ -321,7 +321,30 @@ def deliveryMan_edit_profile(request):
     return render(request, 'deliveryMan/deliveryMan-edit-profile.html', context)
 
 
+@login_required(login_url='login')
+@show_to_deliveryMan(allowed_roles=['admin', 'is_DeliveryMan'])
+def delete_preferredArea(request,pk):
+    PreferredArea=PreferredAreaModel.objects.get(id=pk)
+    PreferredArea.delete()
+
+    return redirect('deliveryMan-feed', request.user.id)
+
     
+@login_required(login_url='login')
+@show_to_buyer(allowed_roles=['admin', 'is_buyer'])
+def delete_availability(request,pk):
+    availability=AvailabilityModel.objects.get(id=pk)
+    availability.delete()
+
+    return redirect('buyer-feed', request.user.id)
+@login_required(login_url='login')
+@show_to_company(allowed_roles=['admin', 'is_company'])
+def delete_product(request,pk):
+    product=ProductModel.objects.get(id=pk)
+    product.delete()
+
+    return redirect('company-feed', request.user.id)
+
 @login_required(login_url='login')
 @show_to_buyer(allowed_roles=['admin', 'is_buyer'])
 def buyer_edit_profile(request):
@@ -351,6 +374,7 @@ def add_availability(request):
     if request.method == 'POST':
         form=AvailabilityForm(request.POST, request.FILES)
         if form.is_valid():
+            print("valid")
             availability=form.save(commit=False)
             availability.buyer=request.user
             print(availability.buyer,availability.time,availability.Days,availability.address)
@@ -365,15 +389,6 @@ def add_availability(request):
     }
     return render(request, 'buyer/add-availability.html', context)
 
-@login_required(login_url='login')
-@show_to_buyer(allowed_roles=['admin', 'is_buyer'])
-def delete_availability(request,pk):
-    availability=AvailabilityModel.objects.get(id=pk)
-    print(availability.buyer,availability.address)
-    availability.delete()
-   
-    
-    return redirect('buyer-feed', request.user.id)
  
 @login_required(login_url='login')
 @show_to_company(allowed_roles=['admin', 'is_company'])
