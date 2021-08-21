@@ -154,6 +154,7 @@ class ProductModel(models.Model):
     price=models.IntegerField(null=True, blank=True)
     category=models.CharField(max_length=255, null=False, blank=False,default="")
     image=models.ImageField(null=True,blank=True)
+    availQuantity=models.IntegerField(null=True, blank=True)
     refill=models.CharField(max_length=255, null=True, blank=True)
 
     class Meta:
