@@ -42,7 +42,8 @@ https://github.com/Sumona062/DeliveryJet.git
 -Edit Product
 -Account Settings
 ```
-# Phase-2
+## Phase-2
+# Features
 -Delivery Man Feed
 -Edit DeliveryMan Profile
 -Add to cart
@@ -50,3 +51,12 @@ https://github.com/Sumona062/DeliveryJet.git
 -View Cart
 -Add and Delete Availability Address-time slot
 -Add and Delete Preferred Area
+# Unit Test
+--Model Test
+-ProductModelTestCase
+-CompanyModelTestCase
+-DeliveryManModelTestCase
+-BuyerModelTestCase
+--Views Text
+-CompanyFeedTestCase
+-CompanyFeedCategoryTestCase
