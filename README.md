@@ -43,8 +43,7 @@ https://github.com/Sumona062/DeliveryJet.git
 -Account Settings
 ```
 # Phase-2
-```
-```
+
 ### Features
 ```
 -Delivery Man Feed
