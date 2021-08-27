@@ -46,7 +46,8 @@
         <ul>
           <li><a href="#products">Products</a></li>
           {% if request.user == user and request.user.is_buyer %}
-          <li ><a href="{% url 'view-cart' user.id %}">view cart</a></li>
+          <li ><a href="{% url 'view-cart' user.id %}">View Cart</a></li>
+          <li ><a href="{% url 'view-pending' user.id %}">View Pending Orders</a></li>
           <li ><a href= "{% url 'buyer-edit-profile' %}">Edit Details</a></li>
           <li ><a href= "{% url 'account-settings' user.id %}">Account Settings</a></li>
           {% endif %}

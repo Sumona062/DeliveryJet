@@ -15,7 +15,7 @@ class OrderModel(models.Model):
 class OrderScheduleModel(models.Model):
     order=models.OneToOneField(OrderModel, null=True, blank=True, on_delete=models.CASCADE)
     code=models.CharField(max_length=6,null=True,blank=False)
-    postDate=models.DateField(null=True,blank=False)
+    postDate=models.CharField(max_length=100,null=True,blank=False)
     deliveryMan=models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
 
    
