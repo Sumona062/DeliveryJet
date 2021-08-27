@@ -25,13 +25,15 @@ def view_cart(request,pk):
             delete=request.POST.get('delete',False)
             ordered = OrderModel.objects.get(buyer=request.user, product=product)
             if plus:
-                ordered.count=ordered.count+1
-                ordered.total=product.price*ordered.count
-                ordered.save()
+                if product.availQuantity>ordered.count:
+                    ordered.count=ordered.count+1
+                    ordered.total=product.price*ordered.count
+                    ordered.save()
             if minus:
-                ordered.count=ordered.count-1
-                ordered.total=product.price*ordered.count
-                ordered.save()
+                if ordered.count>1:
+                    ordered.count=ordered.count-1
+                    ordered.total=product.price*ordered.count
+                    ordered.save()
             if delete:
                 ordered.delete()
     order_list = OrderModel.objects.filter(buyer=user)

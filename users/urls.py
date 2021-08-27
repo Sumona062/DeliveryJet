@@ -8,7 +8,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', home, name='home'),
-    path('about', about, name='about'),
     path('contact', contact, name='contact'),
 
     # user login and logout url
