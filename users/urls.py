@@ -35,5 +35,6 @@ urlpatterns = [
     path('account-settings/<str:pk>/', account_settings, name='account-settings'),
 
     path('account/buyer-feed/<str:pk>/view_cart', view_cart, name='view-cart'),
+    path('account/buyer-feed/<str:pk>/view_pending', view_pending, name='view-pending'),
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
