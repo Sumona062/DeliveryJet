@@ -7,6 +7,7 @@ from .forms import *
 from .utils import *
 from users.decorators import *
 from datetime import date
+from datetime import datetime
 
 @login_required(login_url='login')
 @show_to_buyer(allowed_roles=['admin', 'is_buyer'])
@@ -24,8 +25,12 @@ def view_cart(request,pk):
                     
                     delMan=selectDeliveryMan(order)
                     code=randomCode()
+                    now = datetime.now()
+                    currentTime=now.strftime("%d/%m/%Y %H:%M:%S")
+                    print(currentTime)
+
                     
-                    orderSchedule=OrderScheduleModel(order=order,code=code,postDate=date.today(),deliveryMan=delMan)
+                    orderSchedule=OrderScheduleModel(order=order,code=code,postDate=currentTime,deliveryMan=delMan)
                     #print(orderSchedule.order,orderSchedule.deliveryMan)
                     orderSchedule.save()
                     order.status=randomCode()
@@ -66,20 +71,11 @@ def view_cart(request,pk):
     orderlist = OrderModel.objects.filter(buyer=user)
     order_list=[]
     
-    orderPendingList=[]
-    
-    
     total=0
     for order in orderlist:
         if order.status=='not checkout':
             total=total+order.total
             order_list.append(order)
-
-        if OrderScheduleModel.objects.filter(order=order).exists():
-            schedule=OrderScheduleModel.objects.filter(order=order)
-            for s in schedule:
-                orderPendingList.append(s)
-
     
         
     
@@ -88,6 +84,27 @@ def view_cart(request,pk):
             'order_list': order_list,
             'total':total,
             'form':form,
-            'orderPendingList':orderPendingList
         }
     return render(request, 'view-cart.html', context)
+
+
+
+@login_required(login_url='login')
+@show_to_buyer(allowed_roles=['admin', 'is_buyer'])
+def view_pending(request,pk):
+    user = User.objects.get(id=pk)
+    orderlist = OrderModel.objects.filter(buyer=user)
+    orderPendingList=[]
+
+    for order in orderlist:
+        if OrderScheduleModel.objects.filter(order=order).exists():
+            schedule=OrderScheduleModel.objects.filter(order=order)
+            for s in schedule:
+                orderPendingList.append(s)
+
+    context = {
+            'user': user,
+            'orderPendingList':orderPendingList
+        }
+    return render(request, 'view-pending.html', context)
+
