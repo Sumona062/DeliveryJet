@@ -20,14 +20,29 @@ def view_cart(request,pk):
         checkout=request.POST.get('checkout',False)
         if checkout:
             orderList=OrderModel.objects.filter(buyer=user)
+            now = datetime.now()
+            currentTime=now.strftime("%d/%m/%Y %H:%M:%S")
+            print(currentTime)
             for order in orderList:
                 if order.status=="not checkout":
-                    
                     delMan=selectDeliveryMan(order)
-                    code=randomCode()
-                    now = datetime.now()
-                    currentTime=now.strftime("%d/%m/%Y %H:%M:%S")
-                    print(currentTime)
+                    code=''
+                    if OrderScheduleModel.objects.filter().exists():
+                        print('schedules')
+                        schedules=OrderScheduleModel.objects.filter()
+                        for s in schedules:
+                            if s.order.product.user==order.product.user and s.postDate == currentTime:
+                                code=s.code
+                                print(s.code)
+                                print("exists")
+                            else:
+                                code=randomCode()
+                                print("not exists")
+                    else:
+                        code=randomCode()
+                        print("not schedules")
+
+                    
 
                     
                     orderSchedule=OrderScheduleModel(order=order,code=code,postDate=currentTime,deliveryMan=delMan)
