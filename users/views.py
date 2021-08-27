@@ -138,8 +138,6 @@ def deliveryMan_feed(request,pk):
     return render(request, 'deliveryMan/deliveryMan-feed.html',context)
 
 
-def about(request):
-    return render(request, 'about.html')
 
 
 def contact(request):
@@ -196,16 +194,18 @@ def company_feed(request, pk):
             except:
                 ordered = None
             if ordered is not None:
-                ordered.count=ordered.count+1
-                ordered.total=product.price*ordered.count
-                ordered.save()
+                if product.availQuantity>ordered.count:
+                    ordered.count=ordered.count+1
+                    ordered.total=product.price*ordered.count
+                    ordered.save()
             else:
+                if product.availQuantity>0:
 
-                order.buyer = request.user
-                order.product=product
-                order.count=1
-                order.total=product.price
-                order.save()
+                    order.buyer = request.user
+                    order.product=product
+                    order.count=1
+                    order.total=product.price
+                    order.save()
 
             return redirect('company-feed',user.id)
 
