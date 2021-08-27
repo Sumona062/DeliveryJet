@@ -190,7 +190,7 @@ def company_feed(request, pk):
             product_name=request.POST['product_name']
             product=ProductModel.objects.get(user=user,name=product_name)
             try:
-                ordered = OrderModel.objects.get(buyer=request.user, product=product)
+                ordered = OrderModel.objects.get(buyer=request.user, product=product,status='not checkout')
             except:
                 ordered = None
             if ordered is not None:
@@ -205,6 +205,7 @@ def company_feed(request, pk):
                     order.product=product
                     order.count=1
                     order.total=product.price
+                    order.status='not checkout'
                     order.save()
 
             return redirect('company-feed',user.id)

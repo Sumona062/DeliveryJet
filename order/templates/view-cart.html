@@ -106,7 +106,7 @@
   
   <main id="main">
 
-	<section>
+<section>
 
 <div class="container">
 	<table id="cart" class="table table-hover table-condensed">
@@ -153,8 +153,9 @@
 								<button class="btn btn-info" type="submit" id="plus" name="plus" value=true><i class="fa fa-plus"></i></button>
 								<button class="btn btn-info" type="submit" id="minus" name="minus" value=true><i class="fa fa-minus"></i></button>
 								<button class="btn btn-danger" type="submit" id="delete" name="delete" value=true><i class="fa fa-trash"></i></button>	
-								</form>							
+														
 							</td>
+						</form>	
 							
 						</tr>
 						{% endfor %}
@@ -168,12 +169,84 @@
 							<td><a href="{% url 'buyer-feed' request.user.id %}"  class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
 							<td colspan="2" class="hidden-xs"></td>
 							<td class="hidden-xs text-center"><strong>Total: {{total}} Taka</strong></td>
-							<td><a href="#" class="btn btn-success">Checkout <i class="fa fa-angle-right"></i></a></td>
+							<form method="post" action=""  >
+								{% csrf_token %}
+							<td><button class="btn btn-success" type="submit" id="checkout" name="checkout" value=true>Checkout <i class="fa fa-angle-right"></i></button></td>
+						</form>	
 						</tr>
 					</tfoot>
 				</table>
 </div>
 </section>
+
+<section>
+
+	<div class="container">
+		<table id="cart" class="table table-hover table-condensed">
+			
+						<thead>
+							<tr>
+								<th style="width:22%" class="text-center">Product</th>
+								<th style="width:10%" class="text-center">Price</th>
+								<th style="width:5%"  class="text-center">Quantity</th>
+								<th style="width:15%" class="text-center">Subtotal</th>
+								<th style="width:8%" class="text-center">Code</th>
+								<th style="width:25%" class="text-center">Delivered by</th>
+								<th style="width:19%" class="text-center">Checkout Date</th>
+							</tr>
+						</thead>
+						<div>
+						<tbody>
+							{% for schedule in orderPendingList %}
+							<tr>
+							
+								<td data-th="Product" class="text-center">
+									<div class="row">
+										<div class="col-sm-3 hidden-xs">
+											<img src="{{schedule.order.product.image.url}}" width="100" height="100" alt="..." class="img-responsive"/>
+										</div>
+										<div class="col-sm-10">
+	
+											<h5 class="nomargin">{{schedule.order.product.name}}</h5>
+											<p>Company Name: {{schedule.order.product.user.name}}</p>
+									
+										</div>
+									</div>
+								</td>
+								
+						
+								<td data-th="Price" id="price"  name="price"  class="text-center" value="">{{schedule.order.product.price}} Taka</td>
+								<td data-th="Quantity" id="quantity"  name="quantity" class="text-center">{{schedule.order.count}}</td>
+								<td data-th="Subtotal" class="text-center" id="subtotal" name="subtotal">{{schedule.order.total}} Taka</td>
+								<td data-th="code" class="text-center" id='code' name='code'>{{schedule.code}}</td>
+								
+								<td data-th="deliveryMan">
+									<div class="row">
+										<div class="col-sm-3 hidden-xs">
+											{% if schedule.deliveryMan.deliverymanmodel.image %}
+											<img src="{{schedule.deliveryMan.deliverymanmodel.image.url}}" width="100" height="100" alt="..." class="img-responsive"/>
+											{% endif %}
+										</div>
+										<div class="col-sm-10">
+	
+											<h5 class="nomargin">Name: {{schedule.deliveryMan.name}}</h5>
+											{% if schedule.deliveryMan.deliverymanmodel.phone %}
+											<p>Contact No: {{schedule.deliveryMan.deliverymanmodel.phone}}</p>
+											{% endif %}
+									
+										</div>
+									</div>
+								</td>
+								<td data-th="date" class="text-center" id='date' name='date'>{{schedule.postDate}}</td>
+							
+							</tr>
+							{% endfor %}
+							
+						</tbody>
+					</div>
+					</table>
+	</div>
+	</section>
 </main>
 <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
   <div id="preloader"></div>
