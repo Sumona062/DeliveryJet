@@ -9,4 +9,9 @@ class OrderModel(models.Model):
 
     class Meta:
         unique_together = ('buyer', 'product',)
-    
+
+class OrderScheduleModel(models.Model):
+    order=models.ForeignKey(OrderModel, null=True, blank=True, on_delete=models.CASCADE,unique=True)
+    code=models.IntegerField(null=False,blank=False,default=0)
+    deliveryMan=models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+

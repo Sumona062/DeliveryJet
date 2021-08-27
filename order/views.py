@@ -48,4 +48,3 @@ def view_cart(request,pk):
             'form':form,
         }
     return render(request, 'view-cart.html', context)
-
