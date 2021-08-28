@@ -127,19 +127,19 @@ def buyer_feed(request, pk):
 def deliveryMan_feed(request,pk):
     user = User.objects.get(id=pk)
     preferredArea=PreferredAreaModel.objects.filter(user=request.user)
-    for pref in preferredArea:
-        print(pref.time,pref.user,pref.area)
+    
+
+    order_list=OrderScheduleModel.objects.filter(deliveryMan=user)
     
     context = {
         'user': user,
         'preferredArea':preferredArea,
+        'order_list':order_list,
     }
 
     return render(request, 'deliveryMan/deliveryMan-feed.html',context)
 
 
-def about(request):
-    return render(request, 'about.html')
 
 
 def contact(request):
@@ -190,22 +190,27 @@ def company_feed(request, pk):
         if order_form.is_valid():
             order = order_form.save(commit=False)
             product_name=request.POST['product_name']
+            print(product_name)
+            print(user)
             product=ProductModel.objects.get(user=user,name=product_name)
             try:
-                ordered = OrderModel.objects.get(buyer=request.user, product=product)
+                ordered = OrderModel.objects.get(buyer=request.user, product=product,status='not checkout')
             except:
                 ordered = None
             if ordered is not None:
-                ordered.count=ordered.count+1
-                ordered.total=product.price*ordered.count
-                ordered.save()
+                if product.availQuantity>ordered.count:
+                    ordered.count=ordered.count+1
+                    ordered.total=product.price*ordered.count
+                    ordered.save()
             else:
+                if product.availQuantity>0:
 
-                order.buyer = request.user
-                order.product=product
-                order.count=1
-                order.total=product.price
-                order.save()
+                    order.buyer = request.user
+                    order.product=product
+                    order.count=1
+                    order.total=product.price
+                    order.status='not checkout'
+                    order.save()
 
             return redirect('company-feed',user.id)
 
@@ -244,22 +249,27 @@ def company_feed_category(request, pk, cat):
         if order_form.is_valid():
             order = order_form.save(commit=False)
             product_name=request.POST['product_name']
+            print(product_name)
+            print(user)
             product=ProductModel.objects.get(user=user,name=product_name)
             try:
-                ordered = OrderModel.objects.get(buyer=request.user, product=product)
+                ordered = OrderModel.objects.get(buyer=request.user, product=product,status='not checkout')
             except:
                 ordered = None
             if ordered is not None:
-                ordered.count=ordered.count+1
-                ordered.total=product.price*ordered.count
-                ordered.save()
+                if product.availQuantity>ordered.count:
+                    ordered.count=ordered.count+1
+                    ordered.total=product.price*ordered.count
+                    ordered.save()
             else:
+                if product.availQuantity>0:
 
-                order.buyer = request.user
-                order.product=product
-                order.count=1
-                order.total=product.price
-                order.save()
+                    order.buyer = request.user
+                    order.product=product
+                    order.count=1
+                    order.total=product.price
+                    order.status='not checkout'
+                    order.save()
 
             return redirect('company-feed-category',user.id,cat)
     

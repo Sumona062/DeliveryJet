@@ -26,6 +26,7 @@ https://github.com/Sumona062/DeliveryJet.git
 -python -m pip install django-ckeditor
 -python -m pip install django-filter
 -python -m pip install django-widget-tweaks
+-python -m pip install googlemaps
 ```
 # run the server
 ```
