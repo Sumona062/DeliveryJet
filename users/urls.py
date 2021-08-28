@@ -36,5 +36,7 @@ urlpatterns = [
 
     path('account/buyer-feed/<str:pk>/view_cart', view_cart, name='view-cart'),
     path('account/buyer-feed/<str:pk>/view_pending', view_pending, name='view-pending'),
+    path('order-details/<str:pk>', order_details, name='order-details'),
+    path('order-delivered-form/<str:pk>', order_delivered, name='order-delivered'),
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
