@@ -74,7 +74,7 @@
           {% if request.user == user and request.user.is_buyer %}
           <li ><a href="{% url 'view-cart' user.id %}">View Cart</a></li>
           <li ><a href= "{% url 'buyer-edit-profile' %}">Edit Details</a></li>
-          <li ><a href= "{% url 'account_settings' user.id}">Account Settings</a></li>
+          <li ><a href= "{% url 'account-settings' user.id %}">Account Settings</a></li>
           {% endif %}
           <li  > <a class="get-started-btn scrollto" href="{% url 'logout' %}">Log Out </a></li>
         </ul>
@@ -131,15 +131,15 @@
 							{% for schedule in orderPendingList %}
 							<tr>
 							
-								<td data-th="Product" class="text-center">
+								<td data-th="Product">
 									<div class="row">
 										<div class="col-sm-3 hidden-xs">
 											<img src="{{schedule.order.product.image.url}}" width="100" height="100" alt="..." class="img-responsive"/>
 										</div>
 										<div class="col-sm-10">
 	
-											<h5 class="nomargin">{{schedule.order.product.name}}</h5>
-											<p>Company Name: {{schedule.order.product.user.name}}</p>
+											<h5 class="nomargin"><strong>{{schedule.order.product.name}}</strong></h5>
+											<p><strong>Company Name:</strong>  {{schedule.order.product.user.name}}</p>
 									
 										</div>
 									</div>
@@ -160,9 +160,9 @@
 										</div>
 										<div class="col-sm-10">
 	
-											<h5 class="nomargin">Name: {{schedule.deliveryMan.name}}</h5>
+											<h6 class="nomargin"><strong>Name:</strong> {{schedule.deliveryMan.name}}</h6>
 											{% if schedule.deliveryMan.deliverymanmodel.phone %}
-											<p>Contact No: {{schedule.deliveryMan.deliverymanmodel.phone}}</p>
+											<h8 class="nomargin"><strong>Contact No: </strong>{{schedule.deliveryMan.deliverymanmodel.phone}}</h8>
 											{% endif %}
 									
 										</div>

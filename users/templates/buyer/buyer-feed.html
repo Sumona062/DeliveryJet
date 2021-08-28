@@ -44,7 +44,7 @@
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li><a href="#products">Products</a></li>
+          <li><a href="#products">Companies</a></li>
           {% if request.user == user and request.user.is_buyer %}
           <li ><a href="{% url 'view-cart' user.id %}">View Cart</a></li>
           <li ><a href="{% url 'view-pending' user.id %}">View Pending Orders</a></li>
