@@ -74,7 +74,7 @@
           {% if request.user == user and request.user.is_buyer %}
 		  <li ><a href="{% url 'view-pending' user.id %}">View Pending Orders</a></li>
           <li ><a href= "{% url 'buyer-edit-profile' %}">Edit Details</a></li>
-          <li ><a href= "{% url 'account_settings' user.id}">Account Settings</a></li>
+          <li ><a href= "{% url 'account-settings' user.id %}">Account Settings</a></li>
           {% endif %}
           <li  > <a class="get-started-btn scrollto" href="{% url 'logout' %}">Log Out </a></li>
         </ul>
@@ -140,8 +140,8 @@
 									</div>
 									<div class="col-sm-10">
 
-										<h5 class="nomargin">{{order.product.name}}</h5>
-										<p>Company Name: {{order.product.user.name}}</p>
+										<h5 class="nomargin"><strong>{{order.product.name}}</strong></h5>
+										<p><strong>Company Name:</strong> {{order.product.user.name}}</p>
 								
 									</div>
 								</div>
