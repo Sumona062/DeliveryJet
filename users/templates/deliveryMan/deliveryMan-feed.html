@@ -91,11 +91,32 @@
         </div>
 
         <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
-          <li data-filter="*" class="filter-active">All</li>
           
-         
-          
-         
+            {% for order in order_list %}
+            <li >
+              <a href="{% url 'order-details' order.id %}">
+                <div class="job-listing-logo">
+                    {% if order.order.product.image %}
+                    <img alt="Image" class="img-fluid"  style="width:200px;height:170px;"src=" {{order.order.product.image.url}}">
+                    {% else %}
+                    <img alt="{{order.order.product.name}} logo" class="img-fluid" src="">
+                    {% endif %}
+                </div>
+
+                <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
+                    <div class="job-listing-position custom-width w-100 mb-3 mb-sm-0">
+                        <h4>{{order.order.product.name}}</h4>
+                        <strong>Company: {{order.order.product.user.name}}</strong></br>
+                        
+                          Quanity: <span class="badge badge-danger">{{order.order.count}}</span> 
+                          Price: <span class="badge badge-danger">{{order.order.total}}</span>
+                    </div>
+                    
+                </div>
+
+            </li>
+            {% endfor%}
+
         </ul>
 
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">

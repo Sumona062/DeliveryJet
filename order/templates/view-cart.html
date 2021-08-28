@@ -131,7 +131,7 @@
 								{% csrf_token %}
 								{{form.media}}
 								<input id="product_user" type="hidden" name="product_user" value={{order.product.user}} >
-								<input id="product_name" type="hidden" name="product_name" value={{order.product.name}} >
+								<input id="product_name" type="hidden" name="product_name" value="{{order.product.name}}">
 						
 							<td data-th="Product">
 								<div class="row">

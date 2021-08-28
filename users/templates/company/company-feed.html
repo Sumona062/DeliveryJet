@@ -136,7 +136,7 @@
                    {% else %}
                    <form method="POST"action="">
                     {% csrf_token %}
-                    <input id="product_name" type="hidden" name="product_name" value={{product.name}} >
+                    <input id="product_name" type="hidden" name="product_name" value="{{product.name}}" >
 
                    <button class="venobox preview-link" title="Add to cart" type="submit"><i class="fa fa-shopping-cart"></i></button>
                   </form>

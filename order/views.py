@@ -118,3 +118,72 @@ def view_pending(request,pk):
         }
     return render(request, 'view-pending.html', context)
 
+
+@login_required(login_url='login')
+def order_details(request,pk):
+    order=OrderScheduleModel.objects.get(id=pk)
+
+    location_link = None
+
+    if order.order.product.user.companymodel.location:
+        locations = order.order.product.user.companymodel.location.split(' ')
+        location_link = "https://maps.google.com/maps?width=100%25&amp;height=450&amp;hl=en&amp;q="
+
+        for location in locations:
+            location_link += location + "%20"
+
+        location_link += "&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+
+
+    availabilityList=AvailabilityModel.objects.filter(buyer=order.order.buyer)
+
+    if request.GET.get('unmarkOrder'):
+        order.is_marked = False
+        order.save()
+        return redirect('order-details', order.id)
+
+    if request.GET.get('markOrder'):
+        order.is_marked = True
+        order.save()
+        return redirect('order-details', order.id)
+
+   
+
+    context = {
+        'order':order,
+        'location_link':location_link,
+        'availabilityList':availabilityList
+
+
+    }
+    return render(request, 'order-details.html', context)
+
+
+
+@login_required(login_url='login')
+def order_delivered(request,pk):
+    order=OrderScheduleModel.objects.get(id=pk)
+
+    message= " "
+    
+    if request.GET.get('code'):
+        print("get")
+        code = request.GET['code']
+        if order.code == code:
+            order.order.delete()
+            order.delete()
+            return redirect('deliveryMan-feed', request.user.id)
+        else:
+            message="Order Code does not matched, Please try with the correct Code."
+            context = {
+                'message':message,
+            }
+
+            return render(request, 'delivered.html', context)
+
+    context = {
+        'message':message,
+    }
+    return render(request, 'delivered.html', context)
+
+
