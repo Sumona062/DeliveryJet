@@ -28,20 +28,15 @@ def view_cart(request,pk):
                     delMan=selectDeliveryMan(order)
                     code=''
                     if OrderScheduleModel.objects.filter().exists():
-                        print('schedules')
                         schedules=OrderScheduleModel.objects.filter()
                         for s in schedules:
                             if s.order.product.user==order.product.user and s.postDate == currentTime:
                                 code=s.code
                                 print(s.code)
-                                print("exists")
                             else:
                                 code=randomCode()
-                                print("not exists")
                     else:
                         code=randomCode()
-                        print("not schedules")
-
                     
 
                     
