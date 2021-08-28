@@ -193,7 +193,7 @@ div.relative {
                      <div > <img src="{% static 'assets/favicon.png' %}" class="logo">
 
                         <button class="mbtn blue"  ><a href= "{% url 'deliveryMan-feed' user.id %}">{{request.user.name}}</a></button>
-                        <button class="mbtn blue"  ><a href= "">Acocount Settings</a></button>
+                        <button class="mbtn blue"  ><a href= "{% url 'account-settings' user.id %}">Account Settings</a></button>
                         <button class="mbtn blue" > <a href="{% url 'logout' %}">Log Out </a></button>
                         <div class="relative"><h6><a href="{% url 'home' %}">DelliveryJet</a></h6></div>
                         
