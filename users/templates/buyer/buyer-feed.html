@@ -46,7 +46,8 @@
         <ul>
           <li><a href="#products">Products</a></li>
           {% if request.user == user and request.user.is_buyer %}
-          <li ><a href="{% url 'view-cart' user.id %}">view cart</a></li>
+          <li ><a href="{% url 'view-cart' user.id %}">View Cart</a></li>
+          <li ><a href="{% url 'view-pending' user.id %}">View Pending Orders</a></li>
           <li ><a href= "{% url 'buyer-edit-profile' %}">Edit Details</a></li>
           <li ><a href= "{% url 'account-settings' user.id %}">Account Settings</a></li>
           {% endif %}
@@ -397,7 +398,7 @@
 
                
                 {% for avail in availability %}
-                <a href="{% url 'edit-availability' avail.id %}"  title="Edit Address"><i class="icofont-google-map" ></i></a>
+                <a href="{% url 'delete-availability' avail.id %}"  title="Delete Address"><i class="icofont-trash" ></i></a>
                 <h4>Location:</h4>
                 <p>{{avail.address}}</br>
                 Time Slot: {{avail.Days}}   Time: {{avail.time}}</br>

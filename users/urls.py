@@ -8,7 +8,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', home, name='home'),
-    path('about', about, name='about'),
     path('contact', contact, name='contact'),
 
     # user login and logout url
@@ -24,16 +23,18 @@ urlpatterns = [
     path('company/company-edit-profile', company_edit_profile, name='company-edit-profile'),
     path('customer/customer-edit-profile', buyer_edit_profile, name='buyer-edit-profile'),
     path('customer/add-address', add_availability, name='add-availability'),
-    path('customer/edit-address/<str:pk>/', edit_availability, name='edit-availability'),
+    path('customer/delete-address/<str:pk>/', delete_availability, name='delete-availability'),
     path('deliveryMan/deliveryMan-edit-profile', deliveryMan_edit_profile, name='deliveryMan-edit-profile'),
     path('delete-preferredArea/<str:pk>/', delete_preferredArea, name='delete-preferredArea'),
 
     path('post-product/', post_product, name='post-product'),
     path('edit-product/<str:pk>/', edit_product, name='edit-product'),
+    path('delete-product/<str:pk>/', delete_product, name='delete-product'),
 
     # utilities
     path('account-settings/<str:pk>/', account_settings, name='account-settings'),
 
     path('account/buyer-feed/<str:pk>/view_cart', view_cart, name='view-cart'),
+    path('account/buyer-feed/<str:pk>/view_pending', view_pending, name='view-pending'),
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

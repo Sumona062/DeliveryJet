@@ -26,8 +26,42 @@ https://github.com/Sumona062/DeliveryJet.git
 -python -m pip install django-ckeditor
 -python -m pip install django-filter
 -python -m pip install django-widget-tweaks
+-python -m pip install googlemaps
 ```
 # run the server
 ```
 -python .\manage.py runserver
+```
+
+# Phase-1
+```
+-Sign Up
+-Log In
+-Company Feed,Customer Feed
+-Edit company,Customer profile
+-Post product
+-Edit Product
+-Account Settings
+```
+# Phase-2
+### Features
+```
+-Delivery Man Feed
+-Edit DeliveryMan Profile
+-Add to cart
+-Edit Cart
+-View Cart
+-Add and Delete Availability Address-time slot
+-Add and Delete Preferred Area
+```
+#### Unit Test
+```
+--Model Test
+-ProductModelTestCase
+-CompanyModelTestCase
+-DeliveryManModelTestCase
+-BuyerModelTestCase
+--Views Text
+-CompanyFeedTestCase
+-CompanyFeedCategoryTestCase
 ```

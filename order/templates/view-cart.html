@@ -72,7 +72,7 @@
         <ul>
             <li><a href="{% url 'buyer-feed' request.user.id %}">Go Back To Home</a></li>
           {% if request.user == user and request.user.is_buyer %}
-          <li ><a href="{% url 'view-cart' user.id %}">view cart</a></li>
+		  <li ><a href="{% url 'view-pending' user.id %}">View Pending Orders</a></li>
           <li ><a href= "{% url 'buyer-edit-profile' %}">Edit Details</a></li>
           <li ><a href= "{% url 'account_settings' user.id}">Account Settings</a></li>
           {% endif %}
@@ -106,9 +106,12 @@
   
   <main id="main">
 
-	<section>
+<section>
 
 <div class="container">
+	<div class="section-title">
+		<h2>Cart Details</h2>
+		</div>
 	<table id="cart" class="table table-hover table-condensed">
 		
     				<thead>
@@ -153,8 +156,9 @@
 								<button class="btn btn-info" type="submit" id="plus" name="plus" value=true><i class="fa fa-plus"></i></button>
 								<button class="btn btn-info" type="submit" id="minus" name="minus" value=true><i class="fa fa-minus"></i></button>
 								<button class="btn btn-danger" type="submit" id="delete" name="delete" value=true><i class="fa fa-trash"></i></button>	
-								</form>							
+														
 							</td>
+						</form>	
 							
 						</tr>
 						{% endfor %}
@@ -168,12 +172,16 @@
 							<td><a href="{% url 'buyer-feed' request.user.id %}"  class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
 							<td colspan="2" class="hidden-xs"></td>
 							<td class="hidden-xs text-center"><strong>Total: {{total}} Taka</strong></td>
-							<td><a href="#" class="btn btn-success">Checkout <i class="fa fa-angle-right"></i></a></td>
+							<form method="post" action=""  >
+								{% csrf_token %}
+							<td><button class="btn btn-success" type="submit" id="checkout" name="checkout" value=true>Checkout <i class="fa fa-angle-right"></i></button></td>
+						</form>	
 						</tr>
 					</tfoot>
 				</table>
 </div>
 </section>
+
 </main>
 <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
   <div id="preloader"></div>

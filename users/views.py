@@ -138,8 +138,6 @@ def deliveryMan_feed(request,pk):
     return render(request, 'deliveryMan/deliveryMan-feed.html',context)
 
 
-def about(request):
-    return render(request, 'about.html')
 
 
 def contact(request):
@@ -192,20 +190,23 @@ def company_feed(request, pk):
             product_name=request.POST['product_name']
             product=ProductModel.objects.get(user=user,name=product_name)
             try:
-                ordered = OrderModel.objects.get(buyer=request.user, product=product)
+                ordered = OrderModel.objects.get(buyer=request.user, product=product,status='not checkout')
             except:
                 ordered = None
             if ordered is not None:
-                ordered.count=ordered.count+1
-                ordered.total=product.price*ordered.count
-                ordered.save()
+                if product.availQuantity>ordered.count:
+                    ordered.count=ordered.count+1
+                    ordered.total=product.price*ordered.count
+                    ordered.save()
             else:
+                if product.availQuantity>0:
 
-                order.buyer = request.user
-                order.product=product
-                order.count=1
-                order.total=product.price
-                order.save()
+                    order.buyer = request.user
+                    order.product=product
+                    order.count=1
+                    order.total=product.price
+                    order.status='not checkout'
+                    order.save()
 
             return redirect('company-feed',user.id)
 
@@ -329,6 +330,22 @@ def delete_preferredArea(request,pk):
 
     return redirect('deliveryMan-feed', request.user.id)
 
+    
+@login_required(login_url='login')
+@show_to_buyer(allowed_roles=['admin', 'is_buyer'])
+def delete_availability(request,pk):
+    availability=AvailabilityModel.objects.get(id=pk)
+    availability.delete()
+
+    return redirect('buyer-feed', request.user.id)
+@login_required(login_url='login')
+@show_to_company(allowed_roles=['admin', 'is_company'])
+def delete_product(request,pk):
+    product=ProductModel.objects.get(id=pk)
+    product.delete()
+
+    return redirect('company-feed', request.user.id)
+
 @login_required(login_url='login')
 @show_to_buyer(allowed_roles=['admin', 'is_buyer'])
 def buyer_edit_profile(request):
@@ -354,7 +371,6 @@ def buyer_edit_profile(request):
 @login_required(login_url='login')
 @show_to_buyer(allowed_roles=['admin', 'is_buyer'])
 def add_availability(request):
-    task="Add"
     form=AvailabilityForm()
     if request.method == 'POST':
         form=AvailabilityForm(request.POST, request.FILES)
@@ -370,33 +386,11 @@ def add_availability(request):
             return redirect('add-availability')
 
     context = {
-        'task': task,
         'form':form,
     }
     return render(request, 'buyer/add-availability.html', context)
 
-    
-@login_required(login_url='login')
-@show_to_buyer(allowed_roles=['admin', 'is_buyer'])
-def edit_availability(request,pk):
-    task="Edit"
-    avail = AvailabilityModel.objects.get(id=pk)
-    form=AvailabilityForm(instance=avail)
-    if request.method == 'POST':
-        form=AvailabilityForm(request.POST, request.FILES,instance=avail)
-        if form.is_valid():
-            form.save()
-            return redirect('buyer-feed', request.user.id)
-        else:
-            messages.error(request, 'There are a few problems')
-            return redirect('edit-availability')
-
-    context = {
-        'task': task,
-        'form':form,
-    }
-    return render(request, 'buyer/add-availability.html', context)
-    
+ 
 @login_required(login_url='login')
 @show_to_company(allowed_roles=['admin', 'is_company'])
 def post_product(request):
