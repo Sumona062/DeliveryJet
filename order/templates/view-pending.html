@@ -72,7 +72,7 @@
         <ul>
             <li><a href="{% url 'buyer-feed' request.user.id %}">Go Back To Home</a></li>
           {% if request.user == user and request.user.is_buyer %}
-		  <li ><a href="{% url 'view-pending' user.id %}">View Pending Orders</a></li>
+          <li ><a href="{% url 'view-cart' user.id %}">View Cart</a></li>
           <li ><a href= "{% url 'buyer-edit-profile' %}">Edit Details</a></li>
           <li ><a href= "{% url 'account_settings' user.id}">Account Settings</a></li>
           {% endif %}
@@ -85,7 +85,7 @@
   </header><!-- End Header -->
    <!-- ======= Hero Section ======= -->
    <section id="hero" class="d-flex align-items-center">
-
+    
     <div class="container">
       <div class="row">
         
@@ -106,82 +106,78 @@
   
   <main id="main">
 
+
 <section>
 
-<div class="container">
-	<div class="section-title">
-		<h2>Cart Details</h2>
-		</div>
-	<table id="cart" class="table table-hover table-condensed">
-		
-    				<thead>
-						<tr>
-							<th style="width:30%" class="text-center">Product</th>
-							<th style="width:15%" class="text-center">Price</th>
-							<th style="width:10%"  class="text-center">Quantity</th>
-							<th style="width:25%" class="text-center">Subtotal</th>
-							<th style="width:20%"></th>
-						</tr>
-					</thead>
-					<div>
-					<tbody>
-						{% for order in order_list %}
-						<tr>
-							<form method="post" action=""  >
-								{% csrf_token %}
-								{{form.media}}
-								<input id="product_user" type="hidden" name="product_user" value={{order.product.user}} >
-								<input id="product_name" type="hidden" name="product_name" value="{{order.product.name}}">
-						
-							<td data-th="Product">
-								<div class="row">
-									<div class="col-sm-3 hidden-xs">
-										<img src="{{order.product.image.url}}" width="100" height="100" alt="..." class="img-responsive"/>
-									</div>
-									<div class="col-sm-10">
-
-										<h5 class="nomargin">{{order.product.name}}</h5>
-										<p>Company Name: {{order.product.user.name}}</p>
-								
-									</div>
-								</div>
-							</td>
-							
-					
-							<td data-th="Price" id="price"  name="price"  class="text-center" value="">{{order.product.price}} Taka</td>
-							<td data-th="Quantity" id="quantity"  name="quantity" class="text-center">{{order.count}}</td>
-							<td data-th="Subtotal" class="text-center" id="subtotal" name="subtotal">{{order.total}} Taka</td>
-							<td class="actions" data-th="">
-								
-								<button class="btn btn-info" type="submit" id="plus" name="plus" value=true><i class="fa fa-plus"></i></button>
-								<button class="btn btn-info" type="submit" id="minus" name="minus" value=true><i class="fa fa-minus"></i></button>
-								<button class="btn btn-danger" type="submit" id="delete" name="delete" value=true><i class="fa fa-trash"></i></button>	
-														
-							</td>
-						</form>	
-							
-						</tr>
-						{% endfor %}
-						
-					</tbody>
-				</div>
+	<div class="container">
+        <div class="section-title">
+            <h2>Pending Orders</h2>
+            </div>
+		<table id="cart" class="table table-hover table-condensed">
 			
-					<tfoot>
+						<thead>
+							<tr>
+								<th style="width:22%" class="text-center">Product</th>
+								<th style="width:10%" class="text-center">Price</th>
+								<th style="width:5%"  class="text-center">Quantity</th>
+								<th style="width:15%" class="text-center">Subtotal</th>
+								<th style="width:8%" class="text-center">Code</th>
+								<th style="width:25%" class="text-center">Delivered by</th>
+								<th style="width:19%" class="text-center">Checkout Date</th>
+							</tr>
+						</thead>
+						<div>
+						<tbody>
+							{% for schedule in orderPendingList %}
+							<tr>
+							
+								<td data-th="Product" class="text-center">
+									<div class="row">
+										<div class="col-sm-3 hidden-xs">
+											<img src="{{schedule.order.product.image.url}}" width="100" height="100" alt="..." class="img-responsive"/>
+										</div>
+										<div class="col-sm-10">
+	
+											<h5 class="nomargin">{{schedule.order.product.name}}</h5>
+											<p>Company Name: {{schedule.order.product.user.name}}</p>
+									
+										</div>
+									</div>
+								</td>
+								
 						
-						<tr>
-							<td><a href="{% url 'buyer-feed' request.user.id %}"  class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
-							<td colspan="2" class="hidden-xs"></td>
-							<td class="hidden-xs text-center"><strong>Total: {{total}} Taka</strong></td>
-							<form method="post" action=""  >
-								{% csrf_token %}
-							<td><button class="btn btn-success" type="submit" id="checkout" name="checkout" value=true>Checkout <i class="fa fa-angle-right"></i></button></td>
-						</form>	
-						</tr>
-					</tfoot>
-				</table>
-</div>
-</section>
-
+								<td data-th="Price" id="price"  name="price"  class="text-center" value="">{{schedule.order.product.price}} Taka</td>
+								<td data-th="Quantity" id="quantity"  name="quantity" class="text-center">{{schedule.order.count}}</td>
+								<td data-th="Subtotal" class="text-center" id="subtotal" name="subtotal">{{schedule.order.total}} Taka</td>
+								<td data-th="code" class="text-center" id='code' name='code'>{{schedule.code}}</td>
+								
+								<td data-th="deliveryMan">
+									<div class="row">
+										<div class="col-sm-3 hidden-xs">
+											{% if schedule.deliveryMan.deliverymanmodel.image %}
+											<img src="{{schedule.deliveryMan.deliverymanmodel.image.url}}" width="100" height="100" alt="..." class="img-responsive"/>
+											{% endif %}
+										</div>
+										<div class="col-sm-10">
+	
+											<h5 class="nomargin">Name: {{schedule.deliveryMan.name}}</h5>
+											{% if schedule.deliveryMan.deliverymanmodel.phone %}
+											<p>Contact No: {{schedule.deliveryMan.deliverymanmodel.phone}}</p>
+											{% endif %}
+									
+										</div>
+									</div>
+								</td>
+								<td data-th="date" class="text-center" id='date' name='date'>{{schedule.postDate}}</td>
+							
+							</tr>
+							{% endfor %}
+							
+						</tbody>
+					</div>
+					</table>
+	</div>
+	</section>
 </main>
 <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
   <div id="preloader"></div>
