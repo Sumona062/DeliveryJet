@@ -63,7 +63,7 @@
                     <li><a href="{% url 'view-order' user.id %}">Orders</a></li>
                     <li><a href="{% url 'post-product' %}">Add Products</a></li>
                     <li><a href="{% url 'company-edit-profile' %}">Edit Details</a></li>
-                    <li><a href="">Account Settings</a></li>
+                    <li><a href="{% url 'account-settings' user.id %}">Account Settings</a></li>
                     {% endif %}
                     <li> <a class="get-started-btn scrollto" href="{% url 'logout' %}">Log Out </a></li>
                 </ul>
