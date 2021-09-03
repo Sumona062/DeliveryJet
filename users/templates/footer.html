@@ -219,6 +219,11 @@ footer{
                   <input type="email" name="email" class="form-control">
                 </div>
                 <div class="msg">
+                  <div class="text">Subject *</div>
+                  <input type="subject" name="subject" class="form-control" placeholder="Write your subject here">
+                  
+                </div>
+                <div class="msg">
                   <div class="text">Message *</div>
                   <textarea name="message" name="message" cols="30" rows="3" class="form-control"
                   placeholder="Write your notes or questions here..."></textarea>
@@ -228,6 +233,9 @@ footer{
                 </div>
               </form>
             </div>
+            {% for message in messages %}
+          <p id="messages">{{message}}</p>
+            {% endfor %}
           </div>
         </div>
 
