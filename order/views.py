@@ -187,3 +187,28 @@ def order_delivered(request,pk):
     return render(request, 'delivered.html', context)
 
 
+
+@login_required(login_url='login')
+@show_to_company(allowed_roles=['admin', 'is_company'])
+def view_order(request,pk):
+    user = User.objects.get(id=pk)
+
+       
+    
+    orders = OrderScheduleModel.objects.filter()
+    orderList=[]
+    for o in orders:
+        if(o.order.product.user==user):
+            orderList.append(o)
+
+
+        
+    
+    context = {
+            'user': user,
+            'orderList': orderList,
+        }
+    return render(request, 'view-order.html', context)
+
+
+
