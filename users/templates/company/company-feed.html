@@ -57,7 +57,9 @@
                   {% endif %}
                     <li><a href="#about">About</a></li>
                     <li><a href="#products">Products</a></li>
+                    
                     {% if request.user == user and request.user.is_company %}
+                    <li><a href="{% url 'view-order' user.id %}">Orders</a></li>
                     <li><a href="{% url 'post-product' %}">Add Products</a></li>
                     <li><a href="{% url 'company-edit-profile' %}">Edit Details</a></li>
                     <li><a href="">Account Settings</a></li>
