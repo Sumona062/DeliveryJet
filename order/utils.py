@@ -65,5 +65,19 @@ def selectDeliveryMan(order):
 
 
     
+def minDistanceArea(deliveryMan,companyAdress):
+    preferredAreaList=PreferredAreaModel.objects.filter(user=deliveryMan)
+    distance={}
+    #print(companyAdress)
 
+    for prefArea in preferredAreaList:
+        dis=calculateDistance(prefArea.area,companyAdress)
+        if prefArea.area in distance.keys():
+            if distance[prefArea.area]>dis:
+                distance[prefArea.area]=dis
 
+        else:
+            distance[prefArea.area]=dis
+    #print(distance)     
+    #print(min(distance,key=distance.get))
+    return min(distance,key=distance.get) 
