@@ -144,24 +144,24 @@ def deliveryMan_feed(request,pk):
 
 def contact(request):
     if request.method == 'POST':
-        fname = request.POST['fname']
-        lname = request.POST['lname']
         email_add = request.POST['email']
         subject = request.POST['subject']
         message = request.POST['message']
+        print(email_add,subject,message)
 
         send_mail(
-            subject + " from " + fname + " " + lname + " " + email_add,
-            message,
+            subject,
+            "This Mail is sent from "+email_add+ "\n Message: "+message,
             email_add,
-            ['officialjobland777@gmail.com', ],
-            # the mail address that the email will be sent to
+            ['deliveryjet930@gmail.com',]
         )
-        messages.success(request, "Feedback sent successfully.")
+        if send_mail:
+            messages.success(request, "Feedback sent successfully.")
+            return redirect('login')
+        else:
+            messages.warning(request, "Feedback sent Failed.")
 
-        return render(request, 'user/contact.html', {})
-
-    return render(request, 'user/contact.html', {})
+    return redirect('home')
 
 
 @login_required(login_url='login')
