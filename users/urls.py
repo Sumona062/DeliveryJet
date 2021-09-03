@@ -34,6 +34,7 @@ urlpatterns = [
     # utilities
     path('account-settings/<str:pk>/', account_settings, name='account-settings'),
 
+    path('account/company-feed/<str:pk>/view_order', view_order, name='view-order'),
     path('account/buyer-feed/<str:pk>/view_cart', view_cart, name='view-cart'),
     path('account/buyer-feed/<str:pk>/view_pending', view_pending, name='view-pending'),
     path('order-details/<str:pk>', order_details, name='order-details'),
