@@ -72,10 +72,10 @@ class BuyerModel(models.Model):
         ('Female', 'Female'),
     ]
 
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User,null=True, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
-    facebook = models.CharField(max_length=255, null=True, blank=True)
-    gender = models.CharField(max_length=255, choices=GENDER_CHOICES, null=True, blank=True)
+    facebook = models.CharField(max_length=255,null=True, blank=True)
+    gender = models.CharField(max_length=255, choices=GENDER_CHOICES)
 
     def getBuyer(self):
         return self.user
@@ -92,13 +92,13 @@ class DeliveryManModel(models.Model):
     ]
 
 
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User,null=True,  on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
-    bio =  models.CharField(max_length=255, null=True, blank=True)
-    address = models.CharField(max_length=255, null=True, blank=True)
-    phone = models.CharField(max_length=255, null=True, blank=True)
-    gender = models.CharField(max_length=255, choices=GENDER_CHOICES, null=True, blank=True)
-    facebook = models.CharField(max_length=255, null=True, blank=True)
+    bio =  models.CharField(max_length=255,null=True, blank=True)
+    address = models.CharField(max_length=255,null=True, blank=True)
+    phone = models.CharField(max_length=255,default="")
+    gender = models.CharField(max_length=255, choices=GENDER_CHOICES,null=True, blank=True)
+    facebook = models.CharField(max_length=255,null=True, blank=True)
     documentID=models.CharField(max_length=255,  null=False, blank=False,default="")
     documentType=models.CharField(max_length=255, choices=TYPE_CHOICES, null=False, blank=False,default="")
 
@@ -119,13 +119,13 @@ class CompanyModel(models.Model):
         ('Sports Hub','Sports Hub') 
        
     ]
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
     about = RichTextField(null=True, blank=True)
-    location = models.CharField(max_length=100, null=True, blank=True)
+    location = models.CharField(max_length=100,default="")
     logo = models.ImageField(null=True,blank=True)
-    website = models.CharField(max_length=255, null=True, blank=True)
+    website = models.CharField(max_length=255,default="")
     type=models.CharField(max_length=255, choices=TYPE_CHOICES, null=False, blank=False, default="")
-    phone = models.CharField(max_length=255, null=True, blank=True)
+    phone = models.CharField(max_length=255,default="")
 
     def getCompany(self):
         return self.user
@@ -137,14 +137,22 @@ class AvailabilityModel(models.Model):
         ('9am-3pm','9am-3pm'),
         ('3pm-9pm', '3pm-9pm'),
     ]
-    buyer=models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    buyer=models.ForeignKey(User,null=True,  on_delete=models.CASCADE)
     address = models.CharField(max_length=1000, null=False, blank=False,default="")
     phone=models.CharField(max_length=255, null=False, blank=False,default="")
-    time=models.CharField(max_length=255, choices=Time_choices, null=True, blank=True)
-    Days = models.CharField(max_length=255, null=True, blank=True)
+    time=models.CharField(max_length=255, choices=Time_choices,default="")
+    Days = models.CharField(max_length=255,default="")
 
     class Meta:
         unique_together = ('buyer', 'address','Days','time')
+    def getBuyer(self):
+        return self.buyer
+
+    def getAddress(self):
+        return self.address
+
+    def getPhone(self):
+        return self.phone
 
 class PreferredAreaModel(models.Model):
     Time_choices = [
@@ -152,18 +160,25 @@ class PreferredAreaModel(models.Model):
         ('3pm-9pm', '3pm-9pm'),
     ]
     user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
-    area=models.CharField(max_length=255, null=True, blank=True)
-    time=models.CharField(max_length=255, choices=Time_choices, null=True, blank=True)
+    area=models.CharField(max_length=255,default="")
+    time=models.CharField(max_length=255, choices=Time_choices,default="")
     class Meta:
         unique_together = ('user', 'area',)
 
+    def getUser(self):
+        return self.user
+    def getArea(self):
+        return self.area
+    def getTime(self):
+        return self.time
+
 class ProductModel(models.Model):
     user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
-    name=models.CharField(max_length=255, null=True, blank=True)
-    price=models.IntegerField(null=True, blank=True)
+    name=models.CharField(max_length=255,default="")
+    price=models.IntegerField(default=0)
     category=models.CharField(max_length=255, null=False, blank=False,default="")
     image=models.ImageField(null=True,blank=True)
-    availQuantity=models.IntegerField(null=True, blank=True)
+    availQuantity=models.IntegerField(default=0)
     refill=models.CharField(max_length=255, null=True, blank=True)
 
     class Meta:
