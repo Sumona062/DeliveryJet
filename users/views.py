@@ -157,7 +157,10 @@ def contact(request):
         )
         if send_mail:
             messages.success(request, "Feedback sent successfully.")
+            
             return redirect('login')
+            
+
         else:
             messages.warning(request, "Feedback sent Failed.")
 
