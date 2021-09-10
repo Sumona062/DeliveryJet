@@ -13,6 +13,7 @@ from django.utils.html import strip_tags
 from users.decorators import *
 from .forms import *
 from .utils import *
+from django.db import IntegrityError
 
 @unauthenticated_user
 def home(request):
@@ -318,11 +319,15 @@ def deliveryMan_edit_profile(request):
             return redirect('deliveryMan-feed', request.user.id)
 
         if prefAreaform.is_valid():
-            prefArea=prefAreaform.save(commit=False)
-            prefArea.user=request.user
-            print(prefArea.user,prefArea.area)
-            prefAreaform.save()
-            return redirect('deliveryMan-feed', request.user.id)
+            try:
+                prefArea=prefAreaform.save(commit=False)
+                prefArea.user=request.user
+                print(prefArea.user,prefArea.area)
+                prefAreaform.save()
+                return redirect('deliveryMan-feed', request.user.id)
+            except IntegrityError as e:
+                messages.error(request, 'Must have unique preferred address.')
+                return redirect('deliveryMan-edit-profile')
         else:
             messages.error(request, 'There are a few problems')
             return redirect('deliveryMan-edit-profile')
@@ -387,18 +392,26 @@ def add_availability(request):
     if request.method == 'POST':
         form=AvailabilityForm(request.POST, request.FILES)
         if form.is_valid():
-            print("valid")
-            availability=form.save(commit=False)
-            availability.buyer=request.user
-            print(availability.buyer,availability.time,availability.Days,availability.address)
-            form.save()
-            return redirect('buyer-feed', request.user.id)
+            try:
+                availability=form.save(commit=False)
+                availability.buyer=request.user
+                print(availability.buyer,availability.time,availability.Days,availability.address)
+                form.save()
+                return redirect('buyer-feed', request.user.id)
+            except IntegrityError as e:
+                messages.error(request, 'Must have unique Days and time combination.')
+                return redirect('add-availability')
+
+            
         else:
             messages.error(request, 'There are a few problems')
             return redirect('add-availability')
 
+        
+
     context = {
         'form':form,
+
     }
     return render(request, 'buyer/add-availability.html', context)
 
@@ -412,10 +425,14 @@ def post_product(request):
     if request.method == 'POST':
         form = PostProductForm(request.POST, request.FILES)
         if form.is_valid():
-            product = form.save(commit=False)
-            product.user = request.user
-            form.save()
-            return redirect('company-feed', request.user.id)
+            try:
+                product = form.save(commit=False)
+                product.user = request.user
+                form.save()
+                return redirect('company-feed', request.user.id)
+            except IntegrityError as e:
+                messages.error(request, 'Must have unique Product name.')
+                return redirect('post-product')
         else:
             return redirect('post-product')
 
