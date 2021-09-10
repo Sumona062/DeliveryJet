@@ -37,30 +37,38 @@ def selectDeliveryMan(order):
     
     PreferredAreaList=PreferredAreaModel.objects.filter()
     distance={}
-    for prefArea in PreferredAreaList:
-        if prefArea is not None:
-            initialDis=[]
-            distanceCompany=convert(calculateDistance(companyAddress,prefArea.area))
-            #print('COMPANY',distanceCompany)
-            availablityList=AvailabilityModel.objects.filter(buyer=order.buyer)
-            #print(prefArea.user, prefArea.area,companyAddress)
+    if companyAddress is not None:
+        for prefArea in PreferredAreaList:
+            if prefArea is not None:
+                initialDis=[]
+                distanceCompany=convert(calculateDistance(companyAddress,prefArea.area))
+                #print('COMPANY',distanceCompany)
+                availablityList=AvailabilityModel.objects.filter(buyer=order.buyer)
+                #print(prefArea.user, prefArea.area,companyAddress)
            
-            for avail in availablityList:
-                
-                distanceBuyer=convert(calculateDistance(avail.address,prefArea.area))
-                #print('buyer',distanceBuyer)
-                dis=round(distanceBuyer+distanceCompany,2)
-                initialDis.append(dis)
-            #print(initialDis)
-            if prefArea.user in distance.keys():
-                if distance[prefArea.user]>min(initialDis):
-                    distance[prefArea.user]=min(initialDis)
-            else:
-                distance[prefArea.user]=min(initialDis)
+                for avail in availablityList:
+                    if avail is not None:
+                        distanceBuyer=convert(calculateDistance(avail.address,prefArea.area))
+                        #print('buyer',distanceBuyer)
+                        dis=round(distanceBuyer+distanceCompany,2)
+                        initialDis.append(dis)
+                #print(initialDis)
+                        if prefArea.user in distance.keys():
+                            if distance[prefArea.user]>min(initialDis):
+                                distance[prefArea.user]=min(initialDis)
+                        else:
+                            distance[prefArea.user]=min(initialDis)
+                    else:
+                        return None
             
     #print(distance)
     #print(min(distance,key=distance.get))
-    return min(distance,key=distance.get)
+    if(len(distance)>0):
+        return min(distance,key=distance.get)
+
+    else:
+        return None
+    
    
 
 
@@ -69,15 +77,22 @@ def minDistanceArea(deliveryMan,companyAdress):
     preferredAreaList=PreferredAreaModel.objects.filter(user=deliveryMan)
     distance={}
     #print(companyAdress)
-
     for prefArea in preferredAreaList:
-        dis=calculateDistance(prefArea.area,companyAdress)
-        if prefArea.area in distance.keys():
-            if distance[prefArea.area]>dis:
-                distance[prefArea.area]=dis
+        if prefArea is not None:
+            dis=calculateDistance(prefArea.area,companyAdress)
+            if prefArea.area in distance.keys():
+                if distance[prefArea.area]>dis:
+                    distance[prefArea.area]=dis
 
+            else:
+                distance[prefArea.area]=dis
         else:
-            distance[prefArea.area]=dis
+            return None
+    
     #print(distance)     
     #print(min(distance,key=distance.get))
-    return min(distance,key=distance.get) 
+    if(len(distance)>0):
+        return min(distance,key=distance.get)
+
+    else:
+        return None

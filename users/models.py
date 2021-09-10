@@ -1,7 +1,9 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.http.request import RAISE_ERROR
 from ckeditor.fields import RichTextField
+
 
 
 class MyUserManager(BaseUserManager):
@@ -96,11 +98,13 @@ class DeliveryManModel(models.Model):
     image = models.ImageField(null=True, blank=True)
     bio =  models.CharField(max_length=255,null=True, blank=True)
     address = models.CharField(max_length=255,null=True, blank=True)
-    phone = models.CharField(max_length=255,default="")
+    phone = models.CharField(max_length=255)
     gender = models.CharField(max_length=255, choices=GENDER_CHOICES,null=True, blank=True)
     facebook = models.CharField(max_length=255,null=True, blank=True)
-    documentID=models.CharField(max_length=255,  null=False, blank=False,default="")
-    documentType=models.CharField(max_length=255, choices=TYPE_CHOICES, null=False, blank=False,default="")
+    documentID=models.CharField(max_length=255,  null=False, blank=False)
+    documentType=models.CharField(max_length=255, choices=TYPE_CHOICES, null=False, blank=False)
+
+    REQUIRED_FIELDS = ['phone','documentID','documentType']
 
     def getDeliveryMan(self):
         return self.user
@@ -121,12 +125,12 @@ class CompanyModel(models.Model):
     ]
     user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
     about = RichTextField(null=True, blank=True)
-    location = models.CharField(max_length=100,default="")
+    location = models.CharField(max_length=100)
     logo = models.ImageField(null=True,blank=True)
-    website = models.CharField(max_length=255,default="")
-    type=models.CharField(max_length=255, choices=TYPE_CHOICES, null=False, blank=False, default="")
-    phone = models.CharField(max_length=255,default="")
-
+    website = models.CharField(max_length=255,null=True,blank=True)
+    type=models.CharField(max_length=255, choices=TYPE_CHOICES, null=False, blank=False)
+    phone = models.CharField(max_length=255)
+    REQUIRED_FIELDS = ['location','type','phone']
     def getCompany(self):
         return self.user
 
@@ -138,13 +142,13 @@ class AvailabilityModel(models.Model):
         ('3pm-9pm', '3pm-9pm'),
     ]
     buyer=models.ForeignKey(User,null=True,  on_delete=models.CASCADE)
-    address = models.CharField(max_length=1000, null=False, blank=False,default="")
-    phone=models.CharField(max_length=255, null=False, blank=False,default="")
-    time=models.CharField(max_length=255, choices=Time_choices,default="")
-    Days = models.CharField(max_length=255,default="")
-
+    address = models.CharField(max_length=1000, null=False, blank=False)
+    phone=models.CharField(max_length=255, null=False, blank=False)
+    time=models.CharField(max_length=255, choices=Time_choices)
+    Days = models.CharField(max_length=255)
+    REQUIRED_FIELDS = ['address','phone','time','Days']
     class Meta:
-        unique_together = ('buyer', 'address','Days','time')
+        unique_together = ('buyer','Days','time')
     def getBuyer(self):
         return self.buyer
 
@@ -160,8 +164,9 @@ class PreferredAreaModel(models.Model):
         ('3pm-9pm', '3pm-9pm'),
     ]
     user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
-    area=models.CharField(max_length=255,default="")
-    time=models.CharField(max_length=255, choices=Time_choices,default="")
+    area=models.CharField(max_length=255)
+    time=models.CharField(max_length=255, choices=Time_choices)
+    REQUIRED_FIELDS = ['area','time']
     class Meta:
         unique_together = ('user', 'area',)
 
@@ -174,13 +179,13 @@ class PreferredAreaModel(models.Model):
 
 class ProductModel(models.Model):
     user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
-    name=models.CharField(max_length=255,default="")
-    price=models.IntegerField(default=0)
-    category=models.CharField(max_length=255, null=False, blank=False,default="")
+    name=models.CharField(max_length=255)
+    price=models.IntegerField()
+    category=models.CharField(max_length=255, null=False, blank=False)
     image=models.ImageField(null=True,blank=True)
     availQuantity=models.IntegerField(default=0)
     refill=models.CharField(max_length=255, null=True, blank=True)
-
+    REQUIRED_FIELDS = ['name','category','price']
     class Meta:
         unique_together = ('user', 'name',)
 

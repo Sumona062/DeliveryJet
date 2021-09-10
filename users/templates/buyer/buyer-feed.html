@@ -115,194 +115,12 @@
             
             {% for com in companies %}
             {% if com.companymodel.type == "Cosmetics House" %}
-            
+            <a href="{% url 'company-feed' com.id %}">
               <div class="portfolio-img">
                 {% if com.companymodel.logo %}
-                <img src="{{com.companymodel.logo.url}}" class="img-fluid" alt="">
+                <img src="{{com.companymodel.logo.url}}"style="width:200px;height:200px;" class="img-fluid" alt="">
                {% else %}
-               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
-                {% endif %}
-              </div>
-              <div class="portfolio-info">
-                <h4>{{com.name}}</h4>
-                {% if com.companymodel.website %}
-                <p>Website:{{com.companymodel.website}}</p>
-                {% endif %}
-                {% if com.companymodel.phone %}
-                <p>contact:{{com.companymodel.phone}}</p>
-                {% endif %}
-                <a href="{% url 'company-feed' com.id %}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-           
-            {% endif %}
-            {% endfor %}
-          </div>
-          <div class="col-lg-3 col-md-4 portfolio-item filter-cosmetics">
-            
-            {% for com in companies %}
-            {% if com.companymodel.type == "Book Store" %}
-            
-              <div class="portfolio-img">
-                {% if com.companymodel.logo %}
-                <img src="{{com.companymodel.logo.url}}" class="img-fluid" alt="">
-               {% else %}
-               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
-                {% endif %}
-              </div>
-              <div class="portfolio-info">
-                <h4>{{com.name}}</h4>
-                {% if com.companymodel.website %}
-                <p>Website:{{com.companymodel.website}}</p>
-                {% endif %}
-                {% if com.companymodel.phone %}
-                <p>contact:{{com.companymodel.phone}}</p>
-                {% endif %}
-                <a href="{% url 'company-feed' com.id %}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-           
-            {% endif %}
-            {% endfor %}
-          </div>
-          <div class="col-lg-3 col-md-4 portfolio-item filter-drug">
-            
-            {% for com in companies %}
-            {% if com.companymodel.type == "Drug Store" %}
-            
-              <div class="portfolio-img">
-                {% if com.companymodel.logo %}
-                <img src="{{com.companymodel.logo.url}}" class="img-fluid" alt="">
-               {% else %}
-               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
-                {% endif %}
-              </div>
-              <div class="portfolio-info">
-                <h4>{{com.name}}</h4>
-                {% if com.companymodel.website %}
-                <p>Website:{{com.companymodel.website}}</p>
-                {% endif %}
-                {% if com.companymodel.phone %}
-                <p>contact:{{com.companymodel.phone}}</p>
-                {% endif %}
-                <a href="{% url 'company-feed' com.id %}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-           
-            {% endif %}
-            {% endfor %}
-          </div>
-          <div class="col-lg-3 col-md-4 portfolio-item filter-electronic">
-            
-            {% for com in companies %}
-            {% if com.companymodel.type == "Electronic Store" %}
-            
-              <div class="portfolio-img">
-                {% if com.companymodel.logo %}
-                <img src="{{com.companymodel.logo.url}}" class="img-fluid" alt="">
-               {% else %}
-               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
-                {% endif %}
-              </div>
-              <div class="portfolio-info">
-                <h4>{{com.name}}</h4>
-                {% if com.companymodel.website %}
-                <p>Website:{{com.companymodel.website}}</p>
-                {% endif %}
-                {% if com.companymodel.phone %}
-                <p>contact:{{com.companymodel.phone}}</p>
-                {% endif %}
-                <a href="{% url 'company-feed' com.id %}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-           
-            {% endif %}
-            {% endfor %}
-          </div>
-          <div class="col-lg-3 col-md-4 portfolio-item filter-food">
-            
-            {% for com in companies %}
-            {% if com.companymodel.type == "Food Marts" %}
-            
-              <div class="portfolio-img">
-                {% if com.companymodel.logo %}
-                <img src="{{com.companymodel.logo.url}}" class="img-fluid" alt="">
-               {% else %}
-               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
-                {% endif %}
-              </div>
-              <div class="portfolio-info">
-                <h4>{{com.name}}</h4>
-                {% if com.companymodel.website %}
-                <p>Website:{{com.companymodel.website}}</p>
-                {% endif %}
-                {% if com.companymodel.phone %}
-                <p>contact:{{com.companymodel.phone}}</p>
-                {% endif %}
-                <a href="{% url 'company-feed' com.id %}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-           
-            {% endif %}
-            {% endfor %}
-          </div>
-          <div class="col-lg-3 col-md-4 portfolio-item filter-fashion">
-            
-            {% for com in companies %}
-            {% if com.companymodel.type == "Fashion House" %}
-            
-              <div class="portfolio-img">
-                {% if com.companymodel.logo %}
-                <img src="{{com.companymodel.logo.url}}" class="img-fluid" alt="">
-               {% else %}
-               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
-                {% endif %}
-              </div>
-              <div class="portfolio-info">
-                <h4>{{com.name}}</h4>
-                {% if com.companymodel.website %}
-                <p>Website:{{com.companymodel.website}}</p>
-                {% endif %}
-                {% if com.companymodel.phone %}
-                <p>contact:{{com.companymodel.phone}}</p>
-                {% endif %}
-                <a href="{% url 'company-feed' com.id %}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-           
-            {% endif %}
-            {% endfor %}
-          </div>
-          <div class="col-lg-3 col-md-4 portfolio-item filter-home">
-            
-            {% for com in companies %}
-            {% if com.companymodel.type == "Home Appliances Store" %}
-            
-              <div class="portfolio-img">
-                {% if com.companymodel.logo %}
-                <img src="{{com.companymodel.logo.url}}" class="img-fluid" alt="">
-               {% else %}
-               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
-                {% endif %}
-              </div>
-              <div class="portfolio-info">
-                <h4>{{com.name}}</h4>
-                {% if com.companymodel.website %}
-                <p>Website:{{com.companymodel.website}}</p>
-                {% endif %}
-                {% if com.companymodel.phone %}
-                <p>contact:{{com.companymodel.phone}}</p>
-                {% endif %}
-                <a href="{% url 'company-feed' com.id %}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-           
-            {% endif %}
-            {% endfor %}
-          </div>
-          <div class="col-lg-3 col-md-4 portfolio-item filter-lifestyle">
-            
-            {% for com in companies %}
-            {% if com.companymodel.type == "Lifestyle Store" %}
-            
-              <div class="portfolio-img">
-                {% if com.companymodel.logo %}
-                <img src="{{com.companymodel.logo.url}}" class="img-fluid" alt="">
-               {% else %}
-               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
+               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" style="width:200px;height:200px;"class="img-fluid" alt="">
                 {% endif %}
               </div>
               <div class="portfolio-info">
@@ -313,9 +131,190 @@
                 {% if com.companymodel.phone %}
                 <p>contact: {{com.companymodel.phone}}</p>
                 {% endif %}
-                <a href="{% url 'company-feed' com.id %}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              </div>
+            </a>
+           
+            {% endif %}
+            {% endfor %}
+          </div>
+          <div class="col-lg-3 col-md-4 portfolio-item filter-cosmetics">
+            
+            {% for com in companies %}
+            {% if com.companymodel.type == "Book Store" %}
+            <a href="{% url 'company-feed' com.id %}">
+              <div class="portfolio-img">
+                {% if com.companymodel.logo %}
+                <img src="{{com.companymodel.logo.url}}"style="width:200px;height:200px;" class="img-fluid" alt="">
+               {% else %}
+               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" style="width:200px;height:200px;"class="img-fluid" alt="">
+                {% endif %}
+              </div>
+              <div class="portfolio-info">
+                <h4>{{com.name}}</h4>
+                {% if com.companymodel.website %}
+                <p>Website: {{com.companymodel.website}}</p>
+                {% endif %}
+                {% if com.companymodel.phone %}
+                <p>contact: {{com.companymodel.phone}}</p>
+                {% endif %}
+              </div>
+            </a>
+           
+            {% endif %}
+            {% endfor %}
+          </div>
+          <div class="col-lg-3 col-md-4 portfolio-item filter-drug">
+            
+            {% for com in companies %}
+            {% if com.companymodel.type == "Drug Store" %}
+            <a href="{% url 'company-feed' com.id %}">
+              <div class="portfolio-img">
+                {% if com.companymodel.logo %}
+                <img src="{{com.companymodel.logo.url}}" style="width:200px;height:200px;"class="img-fluid" alt="">
+               {% else %}
+               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" style="width:200px;height:200px;"class="img-fluid" alt="">
+                {% endif %}
+              </div>
+              <div class="portfolio-info">
+                <h4>{{com.name}}</h4>
+                {% if com.companymodel.website %}
+                <p>Website: {{com.companymodel.website}}</p>
+                {% endif %}
+                {% if com.companymodel.phone %}
+                <p>contact: {{com.companymodel.phone}}</p>
+                {% endif %}
+              </div>
+            </a>
+           
+            {% endif %}
+            {% endfor %}
+          </div>
+          <div class="col-lg-3 col-md-4 portfolio-item filter-electronic">
+            
+            {% for com in companies %}
+            {% if com.companymodel.type == "Electronic Store" %}
+            <a href="{% url 'company-feed' com.id %}">
+              <div class="portfolio-img">
+                {% if com.companymodel.logo %}
+                <img src="{{com.companymodel.logo.url}}" style="width:200px;height:200px;"class="img-fluid" alt="">
+               {% else %}
+               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" style="width:200px;height:200px;"class="img-fluid" alt="">
+                {% endif %}
+              </div>
+              <div class="portfolio-info">
+                <h4>{{com.name}}</h4>
+                {% if com.companymodel.website %}
+                <p>Website: {{com.companymodel.website}}</p>
+                {% endif %}
+                {% if com.companymodel.phone %}
+                <p>contact: {{com.companymodel.phone}}</p>
+                {% endif %}
+              </div>
+            </a>
+            {% endif %}
+            {% endfor %}
+          </div>
+          <div class="col-lg-3 col-md-4 portfolio-item filter-food">
+            
+            {% for com in companies %}
+            {% if com.companymodel.type == "Food Marts" %}
+            <a href="{% url 'company-feed' com.id %}">
+              <div class="portfolio-img">
+                {% if com.companymodel.logo %}
+                <img src="{{com.companymodel.logo.url}}"style="width:200px;height:200px;" class="img-fluid" alt="">
+               {% else %}
+               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" style="width:200px;height:200px;"class="img-fluid" alt="">
+                {% endif %}
+              </div>
+              <div class="portfolio-info">
+                <h4>{{com.name}}</h4>
+                {% if com.companymodel.website %}
+                <p>Website: {{com.companymodel.website}}</p>
+                {% endif %}
+                {% if com.companymodel.phone %}
+                <p>contact: {{com.companymodel.phone}}</p>
+                {% endif %}
+              </div>
+            </a>
+           
+            {% endif %}
+            {% endfor %}
+          </div>
+          <div class="col-lg-3 col-md-4 portfolio-item filter-fashion">
+            
+            {% for com in companies %}
+            {% if com.companymodel.type == "Fashion House" %}
+            <a href="{% url 'company-feed' com.id %}">
+              <div class="portfolio-img">
+                {% if com.companymodel.logo %}
+                <img src="{{com.companymodel.logo.url}}" style="width:200px;height:200px;"class="img-fluid" alt="">
+               {% else %}
+               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" style="width:200px;height:200px;"class="img-fluid" alt="">
+                {% endif %}
+              </div>
+              <div class="portfolio-info">
+                <h4>{{com.name}}</h4>
+                {% if com.companymodel.website %}
+                <p>Website: {{com.companymodel.website}}</p>
+                {% endif %}
+                {% if com.companymodel.phone %}
+                <p>contact: {{com.companymodel.phone}}</p>
+                {% endif %}
+              </div>
+            </a>
+           
+            {% endif %}
+            {% endfor %}
+          </div>
+          <div class="col-lg-3 col-md-4 portfolio-item filter-home">
+            
+            {% for com in companies %}
+            {% if com.companymodel.type == "Home Appliances Store" %}
+            <a href="{% url 'company-feed' com.id %}">
+              <div class="portfolio-img">
+                {% if com.companymodel.logo %}
+                <img src="{{com.companymodel.logo.url}}"style="width:200px;height:200px;" class="img-fluid" alt="">
+                {% else %}
+                <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" style="width:200px;height:200px;"class="img-fluid" alt="">
+                {% endif %}
+              </div>
+              <div class="portfolio-info">
+                <h4>{{com.name}}</h4>
+                {% if com.companymodel.website %}
+                <p>Website: {{com.companymodel.website}}</p>
+                {% endif %}
+                {% if com.companymodel.phone %}
+                <p>contact: {{com.companymodel.phone}}</p>
+                {% endif %}
+              </div>
+            </a>
+           
+            {% endif %}
+            {% endfor %}
+          </div>
+          <div class="col-lg-3 col-md-4 portfolio-item filter-lifestyle">
+            
+            {% for com in companies %}
+            {% if com.companymodel.type == "Lifestyle Store" %}
+            <a href="{% url 'company-feed' com.id %}">
+              <div class="portfolio-img">
+                {% if com.companymodel.logo %}
+                <img src="{{com.companymodel.logo.url}}" style="width:200px;height:200px;"class="img-fluid" alt="">
+               {% else %}
+               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" style="width:200px;height:200px;"class="img-fluid" alt="">>
+                {% endif %}
+              </div>
+              <div class="portfolio-info">
+                <h4>{{com.name}}</h4>
+                {% if com.companymodel.website %}
+                <p>Website: {{com.companymodel.website}}</p>
+                {% endif %}
+                {% if com.companymodel.phone %}
+                <p>contact: {{com.companymodel.phone}}</p>
+                {% endif %}
                 
               </div>
+            </a>
            
             {% endif %}
             {% endfor %}
@@ -324,24 +323,24 @@
             
             {% for com in companies %}
             {% if com.companymodel.type == "Mom and Kids" %}
-            
+            <a href="{% url 'company-feed' com.id %}">
               <div class="portfolio-img">
                 {% if com.companymodel.logo %}
-                <img src="{{com.companymodel.logo.url}}" class="img-fluid" alt="">
-               {% else %}
-               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
+                <img src="{{com.companymodel.logo.url}}" style="width:200px;height:200px;" class="img-fluid" alt="">
+                {% else %}
+                <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" style="width:200px;height:200px;"class="img-fluid" alt="">
                 {% endif %}
               </div>
               <div class="portfolio-info">
                 <h4>{{com.name}}</h4>
                 {% if com.companymodel.website %}
-                <p>Website:{{com.companymodel.website}}</p>
+                <p>Website: {{com.companymodel.website}}</p>
                 {% endif %}
                 {% if com.companymodel.phone %}
-                <p>contact:{{com.companymodel.phone}}</p>
+                <p>contact: {{com.companymodel.phone}}</p>
                 {% endif %}
-                <a href="{% url 'company-feed' com.id %}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
               </div>
+            </a>
            
             {% endif %}
             {% endfor %}
@@ -350,24 +349,24 @@
             
             {% for com in companies %}
             {% if com.companymodel.type == "Sports Hub" %}
-            
+            <a href="{% url 'company-feed' com.id %}">
               <div class="portfolio-img">
                 {% if com.companymodel.logo %}
-                <img src="{{com.companymodel.logo.url}}" class="img-fluid" alt="">
+                <img src="{{com.companymodel.logo.url}}" style="width:200px;height:200px;"class="img-fluid" alt="">
                {% else %}
-               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
+               <img src="{% static 'assets/company/img/portfolio/portfolio-2.jpg' %}" style="width:200px;height:200px;"class="img-fluid" alt="">
                 {% endif %}
               </div>
               <div class="portfolio-info">
                 <h4>{{com.name}}</h4>
                 {% if com.companymodel.website %}
-                <p>Website:{{com.companymodel.website}}</p>
+                <p>Website: {{com.companymodel.website}}</p>
                 {% endif %}
                 {% if com.companymodel.phone %}
-                <p>contact:{{com.companymodel.phone}}</p>
+                <p>contact: {{com.companymodel.phone}}</p>
                 {% endif %}
-                <a href="{% url 'company-feed' com.id %}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
               </div>
+            </a>
            
             {% endif %}
             {% endfor %}
