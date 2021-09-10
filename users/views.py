@@ -158,7 +158,9 @@ def contact(request):
         )
         if send_mail:
             messages.success(request, "Feedback sent successfully.")
-            
+            msg_plain="We got your feedback, we will try to reach you soon. \n Thank you.\n\n Your feedback was- "+message
+            from_email = 'deliveryjet930@gmail.com'
+            send_mail(subject, msg_plain, from_email, [email_add,])
             return redirect('login')
             
 
