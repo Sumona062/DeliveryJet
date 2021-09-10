@@ -158,3 +158,4 @@ EMAIL_PORT = '587'
 EMAIL_HOST_USER = 'deliveryjet930@gmail.com'
 EMAIL_HOST_PASSWORD = "jet930delivery"
 EMAIL_USE_TLS = True  # for security
+GOOGLE_API_KEY="AIzaSyCjkI-TzN9giph0DnS1fFF1liDo9HbyQU0"

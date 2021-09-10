@@ -122,19 +122,27 @@ def view_pending(request,pk):
 @login_required(login_url='login')
 def order_details(request,pk):
     order=OrderScheduleModel.objects.get(id=pk)
-
+    deliveryMan=User.objects.get(id=order.deliveryMan.id)
     location_link = None
+    location_link="https://www.google.com/maps/embed/v1/directions?key=AIzaSyCjkI-TzN9giph0DnS1fFF1liDo9HbyQU0&origin="
 
     if order.order.product.user.companymodel.location:
-        locations = order.order.product.user.companymodel.location.split(' ')
-        location_link = "https://maps.google.com/maps?width=100%25&amp;height=450&amp;hl=en&amp;q="
+        originLocation=minDistanceArea(deliveryMan,order.order.product.user.companymodel.location)
+        origin=originLocation.split(' ')
+        destination = order.order.product.user.companymodel.location.split(' ')
+        for orgn in origin:
+            location_link +=orgn+"+"
 
-        for location in locations:
-            location_link += location + "%20"
+        location_link += "&destination="
 
-        location_link += "&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+        for des in destination:
+            location_link += des+"+"
 
+        location_link += "&avoid=tolls|highways"
 
+    
+
+    #print(location_link)
     availabilityList=AvailabilityModel.objects.filter(buyer=order.order.buyer)
 
     if request.GET.get('unmarkOrder'):
