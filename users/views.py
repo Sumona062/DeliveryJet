@@ -148,8 +148,6 @@ def contact(request):
         email_add = request.POST['email']
         subject = request.POST['subject']
         message = request.POST['message']
-        print(email_add,subject,message)
-
         send_mail(
             subject,
             "This Mail is sent from "+email_add+ "\n Message: "+message,
