@@ -109,8 +109,13 @@
 
 <div class="container">
 	<div class="section-title">
-		<h2>Pending Orders Details</h2>
-		</div>
+		{% if pendingCount > 0 %}
+		<h2>Pending Orders</h2>
+		{% else %}
+		<h2>No Pending Orders</h2>
+		{% endif %}
+	</div>
+{% if pendingCount > 0 %}
 	<table id="cart" class="table table-hover table-condensed">
 		
     				<thead>
@@ -186,6 +191,7 @@
 				</div>
 			
 				</table>
+	{% endif %}
 </div>
 </section>
 

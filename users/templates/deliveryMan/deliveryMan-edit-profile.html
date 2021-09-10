@@ -246,6 +246,7 @@ div.relative {
                         </div>
     
                     </form>
+                    
                 </div>
                 <div class="card2 card border-2">
                    
@@ -269,6 +270,14 @@ div.relative {
                         </div>
     
                     </form>
+                    {% for message in messages %}
+                    <div class="alert alert-success">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+        
+                        {{ message }}
+        
+                    </div>
+                    {% endfor %}
                     
                 </div>
                 

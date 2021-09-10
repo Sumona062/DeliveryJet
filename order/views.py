@@ -25,31 +25,32 @@ def view_cart(request,pk):
             print(currentTime)
             for order in orderList:
                 if order.status=="not checkout":
-                    delMan=selectDeliveryMan(order)
-                    code=''
-                    if OrderScheduleModel.objects.filter().exists():
-                        schedules=OrderScheduleModel.objects.filter()
-                        for s in schedules:
-                            if s.order.product.user==order.product.user and s.postDate == currentTime:
-                                code=s.code
-                                print(s.code)
-                            else:
-                                code=randomCode()
-                    else:
-                        code=randomCode()
+                    if(selectDeliveryMan(order) is not None):
+                        delMan=selectDeliveryMan(order)
+                        code=''
+                        if OrderScheduleModel.objects.filter().exists():
+                            schedules=OrderScheduleModel.objects.filter()
+                            for s in schedules:
+                                if s.order.product.user==order.product.user and s.postDate == currentTime:
+                                    code=s.code
+                                    print(s.code)
+                                else:
+                                    code=randomCode()
+                        else:
+                            code=randomCode()
                     
 
                     
-                    orderSchedule=OrderScheduleModel(order=order,code=code,postDate=currentTime,deliveryMan=delMan)
-                    #print(orderSchedule.order,orderSchedule.deliveryMan)
-                    orderSchedule.save()
-                    order.status=randomCode()
-                    order.save()
-                    product_user=order.product.user
-                    product_name=order.product.name
-                    product=ProductModel.objects.get(user=product_user,name=product_name)
-                    product.availQuantity=product.availQuantity-order.count
-                    product.save()
+                        orderSchedule=OrderScheduleModel(order=order,code=code,postDate=currentTime,deliveryMan=delMan)
+                        #print(orderSchedule.order,orderSchedule.deliveryMan)
+                        orderSchedule.save()
+                        order.status=randomCode()
+                        order.save()
+                        product_user=order.product.user
+                        product_name=order.product.name
+                        product=ProductModel.objects.get(user=product_user,name=product_name)
+                        product.availQuantity=product.availQuantity-order.count
+                        product.save()
 
         elif form.is_valid():
             product_user=request.POST['product_user']
@@ -87,13 +88,14 @@ def view_cart(request,pk):
             total=total+order.total
             order_list.append(order)
     
-        
+    orderCount=len(order_list) 
     
     context = {
             'user': user,
             'order_list': order_list,
             'total':total,
             'form':form,
+            'orderCount':orderCount
         }
     return render(request, 'view-cart.html', context)
 
@@ -111,10 +113,11 @@ def view_pending(request,pk):
             schedule=OrderScheduleModel.objects.filter(order=order)
             for s in schedule:
                 orderPendingList.append(s)
-
+    pendingCount=len(orderPendingList)
     context = {
             'user': user,
-            'orderPendingList':orderPendingList
+            'orderPendingList':orderPendingList,
+            'pendingCount':pendingCount,
         }
     return render(request, 'view-pending.html', context)
 
@@ -124,9 +127,10 @@ def order_details(request,pk):
     order=OrderScheduleModel.objects.get(id=pk)
     deliveryMan=User.objects.get(id=order.deliveryMan.id)
     location_link = None
-    location_link="https://www.google.com/maps/embed/v1/directions?key=AIzaSyCjkI-TzN9giph0DnS1fFF1liDo9HbyQU0&origin="
+    
 
     if order.order.product.user.companymodel.location:
+        location_link="https://www.google.com/maps/embed/v1/directions?key=AIzaSyCjkI-TzN9giph0DnS1fFF1liDo9HbyQU0&origin="
         originLocation=minDistanceArea(deliveryMan,order.order.product.user.companymodel.location)
         origin=originLocation.split(' ')
         destination = order.order.product.user.companymodel.location.split(' ')
@@ -210,11 +214,12 @@ def view_order(request,pk):
             orderList.append(o)
 
 
-        
+    pendingCount=len(orderList)  
     
     context = {
             'user': user,
             'orderList': orderList,
+            'pendingCount':pendingCount,
         }
     return render(request, 'view-order.html', context)
 
