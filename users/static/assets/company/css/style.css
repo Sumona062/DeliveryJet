@@ -388,9 +388,6 @@ h1, h2, h3, h4, h5, h6 {
   background: #37517e;
 }
 
-#hero .container {
-  padding-top: 72px;
-}
 
 #hero h1 {
   margin: 0 0 10px 0;
@@ -404,47 +401,6 @@ h1, h2, h3, h4, h5, h6 {
   color: rgba(255, 255, 255, 0.6);
   margin-bottom: 50px;
   font-size: 24px;
-}
-
-#hero .btn-get-started {
-  font-family: "Jost", sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  letter-spacing: 1px;
-  display: inline-block;
-  padding: 10px 28px 11px 28px;
-  border-radius: 50px;
-  transition: 0.5s;
-  margin: 10px 0 0 0;
-  color: #fff;
-  background: #47b2e4;
-}
-
-#hero .btn-get-started:hover {
-  background: #209dd8;
-}
-
-#hero .btn-watch-video {
-  font-size: 16px;
-  display: inline-block;
-  padding: 10px 0 8px 40px;
-  transition: 0.5s;
-  margin: 10px 0 0 25px;
-  color: #fff;
-  position: relative;
-}
-
-#hero .btn-watch-video i {
-  color: #fff;
-  font-size: 32px;
-  position: absolute;
-  left: 0;
-  top: 7px;
-  transition: 0.3s;
-}
-
-#hero .btn-watch-video:hover i {
-  color: #47b2e4;
 }
 
 #hero .animated {

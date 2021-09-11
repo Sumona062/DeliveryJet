@@ -30,11 +30,31 @@
   <link href="{% static 'assets/company/css/style.css' %}" rel="stylesheet">
 
 </head>
+<style>
+  .success{
+    list-style:none;
+    background-color: green;
+    color: white;
+    box-shadow: 12px 12px 12px white;
+    text-align: center;
+
+  }
+</style>
 
 <body>
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top ">
+    <div>
+      {% if messages %}
+      <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"
+      {% endif %}>{{ message }}</li>
+      {% endfor %}
+      </ui>
+      {% endif %}
+    </div>
     <div class="container d-flex align-items-center">
         <div><img src="{% static 'assets/favicon.png' %}" width="30" height= "30"></div>
         
@@ -53,8 +73,8 @@
         </ul>
       </nav><!-- .nav-menu -->
 
-
     </div>
+    
   </header><!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
@@ -100,8 +120,10 @@
                     <img alt="Image" class="img-fluid"  style="width:200px;height:170px;"src=" {{order.order.product.image.url}}">
                     {% else %}
                     <img alt="{{order.order.product.name}} logo" class="img-fluid" src="">
-                    {% endif %}
+                    
                 </div>
+                {% endif %}
+                      
 
                 <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
                     <div class="job-listing-position custom-width w-100 mb-3 mb-sm-0">
@@ -109,13 +131,19 @@
                         <strong>Company: {{order.order.product.user.name}}</strong></br>
                         
                           Quanity: <span class="badge badge-danger">{{order.order.count}}</span> 
-                          Price: <span class="badge badge-danger">{{order.order.total}}</span>
+                          Price: <span class="badge badge-danger">{{order.order.total}}</span></br></br>
+                          {% if order.is_marked %}
+                         <label class="btn btn-success">Collected</label>               
+                          {% else %}
+                          <label class="btn btn-success">Not Collected</label>
+                                       
+                          {% endif %}
                     </div>
                     
                 </div>
 
             </li>
-            {% endfor%}
+            {% endfor %}
 
         </ul>
 

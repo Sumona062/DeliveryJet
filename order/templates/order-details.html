@@ -90,13 +90,13 @@
                     {% if order.is_marked %}
                     <div class="col-6">
                         <form method="GET">
-                        <input class="btn btn-block  btn-outline-danger btn-md" name="unmarkOrder" type="submit" value="Unmark Order">
+                        <input class="btn btn-block  btn-outline-danger btn-md" name="Not Collected" type="submit" value="Not Collected">
                     </form>
                     </div>
                     {% else %}
                     <div class="col-6">
                         <form method="GET">
-                        <input class="btn btn-block btn-outline-success btn-md" name="markOrder" type="submit" value="Mark Order">
+                        <input class="btn btn-block btn-outline-success btn-md" name="Collected" type="submit" value="Collected">
                     </form>
                     </div>
                     {% endif %}
@@ -116,6 +116,7 @@
                     <figure class="mb-5">
                         <img src="{{ order.order.product.image.url}}" style="width:200px;height:200px;" alt="Image" class="img-fluid rounded">
                     </figure>
+                    
                     {% endif %}
                     
                 </div>
@@ -145,6 +146,7 @@
                    No website Available
                     {% endif %}
                 </li>
+                
             </ul>
                 </div>
 

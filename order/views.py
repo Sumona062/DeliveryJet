@@ -8,6 +8,7 @@ from .utils import *
 from users.decorators import *
 from datetime import date
 from datetime import datetime
+from django.contrib import messages
 
 @login_required(login_url='login')
 @show_to_buyer(allowed_roles=['admin', 'is_buyer'])
@@ -149,12 +150,12 @@ def order_details(request,pk):
     #print(location_link)
     availabilityList=AvailabilityModel.objects.filter(buyer=order.order.buyer)
 
-    if request.GET.get('unmarkOrder'):
+    if request.GET.get('Not Collected'):
         order.is_marked = False
         order.save()
         return redirect('order-details', order.id)
 
-    if request.GET.get('markOrder'):
+    if request.GET.get('Collected'):
         order.is_marked = True
         order.save()
         return redirect('order-details', order.id)
@@ -178,12 +179,14 @@ def order_delivered(request,pk):
 
     message= " "
     
+    
     if request.GET.get('code'):
         print("get")
         code = request.GET['code']
         if order.code == code:
             order.order.delete()
             order.delete()
+            messages.success(request,"Succesfully delivered the order.")
             return redirect('deliveryMan-feed', request.user.id)
         else:
             message="Order Code does not matched, Please try with the correct Code."
