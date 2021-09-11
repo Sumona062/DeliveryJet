@@ -41,7 +41,7 @@ class ProductModelTestCase (TestCase):
     def setUp(self):
         user = authenticate(email="test@ewubd.edu", password="Test123")
         name = "Test Product"
-        self.product = ProductModel.objects.create(user=user, name=name )
+        self.product = ProductModel.objects.create(user=user, name=name ,price=100)
 
     def test_productmodel_creation(self):
         self.assertTrue(isinstance(self.product, ProductModel))
